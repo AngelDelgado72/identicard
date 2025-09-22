@@ -31,6 +31,7 @@
                 <tr>
                     <th class="px-4 py-2">Empresa</th>
                     <th class="px-4 py-2">Nombre</th>
+                    <th class="px-4 py-2">Empleados</th>
                     <th class="px-4 py-2">Dirección</th>
                     <th class="px-4 py-2">Acciones</th>
                 </tr>
@@ -40,6 +41,11 @@
                     <tr class="border-b border-gray-700">
                         <td class="px-4 py-2">{{ $sucursal->empresa->Nombre ?? 'Sin empresa' }}</td>
                         <td class="px-4 py-2">{{ $sucursal->Nombre }}</td>
+                        <td class="px-4 py-2">
+                            <a href="{{ route('sucursales.empleados', $sucursal->idSucursal) }}" class="text-blue-400 hover:underline">
+                                Ver empleados
+                            </a>
+                        </td>
                         <td class="px-4 py-2">{{ $sucursal->Direccion }}</td>
                         <td class="px-4 py-2 flex gap-2 justify-center items-center">
                             <a href="{{ route('sucursales.edit', $sucursal->idSucursal) }}" class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm">Editar</a>
@@ -52,7 +58,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-4 py-2 text-center text-gray-400">No hay sucursales registradas.</td>
+                        <td colspan="5" class="px-4 py-2 text-center text-gray-400">No hay sucursales registradas.</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -38,6 +38,7 @@ Route::get('/sucursales/{sucursal}/edit', [SucursalController::class, 'edit'])->
 Route::put('/sucursales/{sucursal}', [SucursalController::class, 'update'])->name('sucursales.update');
 Route::delete('/sucursales/{sucursal}', [SucursalController::class, 'destroy'])->name('sucursales.destroy');
 Route::get('/sucursales/crud/{empresa?}', [DashboardController::class, 'sucursalesCrud'])->name('sucursales.crud');
+Route::get('/sucursales/{sucursal}/empleados', [EmpleadoController::class, 'porSucursal'])->name('sucursales.empleados');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/empresas/crud', [DashboardController::class, 'empresasCrud'])->middleware(['auth', 'verified'])->name('empresas.crud');
@@ -47,8 +48,10 @@ Route::get('/sucursales/crud/{empresa?}', [DashboardController::class, 'sucursal
 Route::get('/empleados/crud', [DashboardController::class, 'empleadosCrud'])->middleware(['auth', 'verified'])->name('empleados.crud');
 Route::get('/empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
 Route::post('/empleados', [EmpleadoController::class, 'store'])->name('empleados.store');
+Route::get('/empleados/{empleado}', [EmpleadoController::class, 'show'])->name('empleados.show');
 Route::get('/empleados/{empleado}/edit', [EmpleadoController::class, 'edit'])->name('empleados.edit');
 Route::put('/empleados/{empleado}', [EmpleadoController::class, 'update'])->name('empleados.update');
+Route::post('/empleados/{empleado}/validar', [EmpleadoController::class, 'validar'])->name('empleados.validar');
 Route::delete('/empleados/{empleado}', [EmpleadoController::class, 'destroy'])->name('empleados.destroy');
 
 require __DIR__.'/auth.php';

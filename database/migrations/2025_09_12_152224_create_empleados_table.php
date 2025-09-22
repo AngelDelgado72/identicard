@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('Puesto', 100)->nullable();
             $table->string('Firma', 255)->nullable();
             $table->string('Foto', 255)->nullable();
+            $table->boolean('Validado')->default(false);
             $table->unsignedBigInteger('idSucursal')->nullable(); // <-- Cambia aquí            
             $table->timestamps();
 

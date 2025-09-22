@@ -24,6 +24,7 @@ class Empleado extends Model
         'RFC',          // <-- debe estar aquí
         'Firma',
         'Foto',
+        'Validado',
         // 'idSucursal', // si lo usas como sucursal principal
     ];
 
@@ -35,5 +36,29 @@ class Empleado extends Model
     public function sucursal()
     {
         return $this->belongsTo(\App\Models\Sucursal::class, 'idSucursal', 'idSucursal');
+    }
+
+    public function getStatusAttribute()
+    {
+        $camposObligatorios = [
+            'Nombre',
+            'Apellido',
+            'Correo',
+            'TipoSangre',
+            'NumeroSeguroSocial',
+            'CodigoRH',
+            'Puesto',
+            'Departamento',
+            'RFC',
+            'Firma',
+            'Foto'
+        ];
+
+        foreach ($camposObligatorios as $campo) {
+            if (empty($this->$campo)) {
+                return 'Incompleto';
+            }
+        }
+        return 'Completo';
     }
 }

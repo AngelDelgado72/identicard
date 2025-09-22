@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('empleados.store') }}" class="space-y-4">
+            <form method="POST" action="{{ route('empleados.store') }}" class="space-y-4" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="Nombre" class="block text-sm font-medium text-white">Nombre</label>
@@ -57,11 +57,11 @@
                 </div>
                 <div>
                     <label for="Firma" class="block text-sm font-medium text-white">Firma</label>
-                    <input type="text" name="Firma" id="Firma" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
+                    <input type="file" name="Firma" id="Firma" accept="image/*" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
                 </div>
                 <div>
                     <label for="Foto" class="block text-sm font-medium text-white">Foto</label>
-                    <input type="text" name="Foto" id="Foto" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
+                    <input type="file" name="Foto" id="Foto" accept="image/*" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
                 </div>
                 <div>
                     <label for="sucursales" class="block text-sm font-medium text-white">Sucursales</label>
