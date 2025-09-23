@@ -15,6 +15,32 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    
+                    @auth
+                        @if(auth()->user()->tienePermiso('perfiles', 'ver'))
+                            <x-nav-link :href="route('admin.perfiles.index')" :active="request()->routeIs('admin.perfiles.*')">
+                                {{ __('Administrar Perfiles') }}
+                            </x-nav-link>
+                        @endif
+                        
+                        @if(auth()->user()->tienePermiso('usuarios', 'ver'))
+                            <x-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.*')">
+                                {{ __('Gestionar Usuarios') }}
+                            </x-nav-link>
+                        @endif
+                        
+                        @if(auth()->user()->tienePermiso('empresas', 'ver'))
+                            <x-nav-link :href="route('empresas.crud')" :active="request()->routeIs('empresas.*')">
+                                {{ __('Empresas') }}
+                            </x-nav-link>
+                        @endif
+                        
+                        @if(auth()->user()->tienePermiso('empleados', 'ver'))
+                            <x-nav-link :href="route('empleados.crud')" :active="request()->routeIs('empleados.*')">
+                                {{ __('Empleados') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 

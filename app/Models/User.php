@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'idPerfil',
     ];
 
     /**
@@ -44,5 +45,34 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Relación con perfil
+    public function perfil()
+    {
+        return $this->belongsTo(Perfil::class, 'idPerfil', 'idPerfil');
+    }
+
+    // Método para verificar si el usuario tiene un permiso específico
+    public function tienePermiso($modulo, $accion)
+    {
+        if (!$this->perfil) {
+            return false;
+        }
+
+        return $this->perfil->permisos()
+            ->where('modulo', $modulo)
+            ->where('accion', $accion)
+            ->exists();
+    }
+
+    // Método para obtener todos los permisos del usuario
+    public function permisos()
+    {
+        if (!$this->perfil) {
+            return collect();
+        }
+
+        return $this->perfil->permisos;
     }
 }
