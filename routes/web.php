@@ -14,10 +14,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-    
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -69,12 +66,15 @@ Route::middleware(['auth', 'verified', 'permission:sucursales,eliminar'])->group
 // Rutas de empleados con permisos
 Route::middleware(['auth', 'verified', 'permission:empleados,ver'])->group(function () {
     Route::get('/empleados/crud', [DashboardController::class, 'empleadosCrud'])->name('empleados.crud');
-    Route::get('/empleados/{empleado}', [EmpleadoController::class, 'show'])->name('empleados.show');
 });
 
 Route::middleware(['auth', 'verified', 'permission:empleados,crear'])->group(function () {
     Route::get('/empleados/create', [EmpleadoController::class, 'create'])->name('empleados.create');
     Route::post('/empleados', [EmpleadoController::class, 'store'])->name('empleados.store');
+});
+
+Route::middleware(['auth', 'verified', 'permission:empleados,ver'])->group(function () {
+    Route::get('/empleados/{empleado}', [EmpleadoController::class, 'show'])->name('empleados.show');
 });
 
 Route::middleware(['auth', 'verified', 'permission:empleados,editar'])->group(function () {
@@ -93,12 +93,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     // Rutas de perfiles
     Route::middleware(['permission:perfiles,ver'])->group(function () {
         Route::get('perfiles', [PerfilController::class, 'index'])->name('perfiles.index');
-        Route::get('perfiles/{perfil}', [PerfilController::class, 'show'])->name('perfiles.show');
     });
     
     Route::middleware(['permission:perfiles,crear'])->group(function () {
         Route::get('perfiles/create', [PerfilController::class, 'create'])->name('perfiles.create');
         Route::post('perfiles', [PerfilController::class, 'store'])->name('perfiles.store');
+    });
+    
+    Route::middleware(['permission:perfiles,ver'])->group(function () {
+        Route::get('perfiles/{perfil}', [PerfilController::class, 'show'])->name('perfiles.show');
     });
     
     Route::middleware(['permission:perfiles,editar'])->group(function () {
@@ -114,12 +117,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     // Rutas de usuarios
     Route::middleware(['permission:usuarios,ver'])->group(function () {
         Route::get('usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
-        Route::get('usuarios/{usuario}', [UsuarioController::class, 'show'])->name('usuarios.show');
     });
     
     Route::middleware(['permission:usuarios,crear'])->group(function () {
         Route::get('usuarios/create', [UsuarioController::class, 'create'])->name('usuarios.create');
         Route::post('usuarios', [UsuarioController::class, 'store'])->name('usuarios.store');
+    });
+    
+    Route::middleware(['permission:usuarios,ver'])->group(function () {
+        Route::get('usuarios/{usuario}', [UsuarioController::class, 'show'])->name('usuarios.show');
     });
     
     Route::middleware(['permission:usuarios,editar'])->group(function () {

@@ -28,18 +28,6 @@
                                 {{ __('Gestionar Usuarios') }}
                             </x-nav-link>
                         @endif
-                        
-                        @if(auth()->user()->tienePermiso('empresas', 'ver'))
-                            <x-nav-link :href="route('empresas.crud')" :active="request()->routeIs('empresas.*')">
-                                {{ __('Empresas') }}
-                            </x-nav-link>
-                        @endif
-                        
-                        @if(auth()->user()->tienePermiso('empleados', 'ver'))
-                            <x-nav-link :href="route('empleados.crud')" :active="request()->routeIs('empleados.*')">
-                                {{ __('Empleados') }}
-                            </x-nav-link>
-                        @endif
                     @endauth
                 </div>
             </div>
@@ -96,6 +84,39 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            
+            @auth
+                @if(auth()->user()->tienePermiso('perfiles', 'ver'))
+                    <x-responsive-nav-link :href="route('admin.perfiles.index')" :active="request()->routeIs('admin.perfiles.*')">
+                        {{ __('Administrar Perfiles') }}
+                    </x-responsive-nav-link>
+                @endif
+                
+                @if(auth()->user()->tienePermiso('usuarios', 'ver'))
+                    <x-responsive-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.*')">
+                        {{ __('Gestionar Usuarios') }}
+                    </x-responsive-nav-link>
+                @endif
+                
+                <!-- Enlaces de la barra lateral para móvil -->
+                @if(auth()->user()->tienePermiso('empresas', 'ver'))
+                    <x-responsive-nav-link :href="route('empresas.crud')" :active="request()->routeIs('empresas.*')">
+                        {{ __('Empresas') }}
+                    </x-responsive-nav-link>
+                @endif
+                
+                @if(auth()->user()->tienePermiso('sucursales', 'ver'))
+                    <x-responsive-nav-link :href="route('sucursales.crud')" :active="request()->routeIs('sucursales.*')">
+                        {{ __('Sucursales') }}
+                    </x-responsive-nav-link>
+                @endif
+                
+                @if(auth()->user()->tienePermiso('empleados', 'ver'))
+                    <x-responsive-nav-link :href="route('empleados.crud')" :active="request()->routeIs('empleados.*')">
+                        {{ __('Empleados') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->

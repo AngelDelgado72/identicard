@@ -12,7 +12,7 @@ class EmpleadoController extends Controller
 {
     public function create()
     {
-        $sucursales = Sucursal::all();
+        $sucursales = \App\Models\Sucursal::all();
         return view('empleados.create', compact('sucursales'));
     }
 

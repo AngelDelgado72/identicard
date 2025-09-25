@@ -35,7 +35,9 @@ class CheckPermission
         }
 
         // Verificar si el usuario tiene el permiso específico
-        if (!$user->tienePermiso($modulo, $accion)) {
+        $hasPermission = $user->tienePermiso($modulo, $accion);
+
+        if (!$hasPermission) {
             abort(403, "No tienes permisos para {$accion} en el módulo de {$modulo}.");
         }
 

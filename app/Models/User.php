@@ -66,6 +66,12 @@ class User extends Authenticatable
             ->exists();
     }
 
+    // Alias para compatibilidad con las vistas
+    public function hasPermission($modulo, $accion)
+    {
+        return $this->tienePermiso($modulo, $accion);
+    }
+
     // Método para obtener todos los permisos del usuario
     public function permisos()
     {

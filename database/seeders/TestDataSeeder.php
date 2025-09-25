@@ -86,9 +86,9 @@ class TestDataSeeder extends Seeder
             'idPerfil' => $perfilLectura->idPerfil
         ]);
 
-        echo "✅ Perfiles y usuarios de prueba creados:\n";
-        echo "📋 Administrador: admin@test.com (password123) - Acceso completo\n";
-        echo "✏️  Editor: editor@test.com (password123) - Edición limitada\n";
-        echo "👁️  Solo Lectura: lectura@test.com (password123) - Solo ver\n";
+        echo "Perfiles y usuarios de prueba creados:\n";
+        echo "Administrador: admin@test.com (password123) - Acceso completo\n";
+        echo "Editor: editor@test.com (password123) - Edición limitada\n";
+        echo "Solo Lectura: lectura@test.com (password123) - Solo ver\n";
     }
 }
