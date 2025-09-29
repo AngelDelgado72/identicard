@@ -77,6 +77,38 @@
                             </div>
 
                             <div>
+                                <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Sucursales Asignadas</h4>
+                                @if($usuario->sucursales->count() > 0)
+                                    <div class="space-y-2">
+                                        @foreach($usuario->sucursales as $sucursal)
+                                            <div class="p-3 bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg">
+                                                <div class="flex justify-between items-start">
+                                                    <div>
+                                                        <h5 class="font-medium text-green-800 dark:text-green-200">
+                                                            🏢 {{ $sucursal->Nombre }}
+                                                        </h5>
+                                                        <p class="text-sm text-green-700 dark:text-green-300">
+                                                            {{ $sucursal->empresa->Nombre ?? 'Sin empresa asignada' }}
+                                                        </p>
+                                                        <p class="text-xs text-green-600 dark:text-green-400 mt-1">
+                                                            📍 {{ $sucursal->Direccion ?? 'Sin dirección' }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <div class="p-4 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                                        <p class="text-yellow-800 dark:text-yellow-200 font-medium">⚠️ Sin sucursales asignadas</p>
+                                        <p class="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
+                                            Este usuario tiene acceso a todas las sucursales del sistema.
+                                        </p>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div>
                                 <h4 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">Estado del Usuario</h4>
                                 <div class="space-y-2">
                                     @if($usuario->id === auth()->id())

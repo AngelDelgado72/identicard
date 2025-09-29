@@ -29,4 +29,10 @@ class Sucursal extends Model
     {
         return $this->belongsToMany(\App\Models\Empleado::class, 'empleado_sucursal', 'idSucursal', 'idEmpleado');
     }
+
+    // Relación: Muchos a muchos con usuarios
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'usuario_sucursal', 'idSucursal', 'idUsuario');
+    }
 }

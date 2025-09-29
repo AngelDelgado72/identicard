@@ -56,8 +56,8 @@ class TestDataSeeder extends Seeder
             $perfilLectura->permisos()->syncWithoutDetaching($permisosLectura->pluck('idPermiso'));
         }
 
-        // Crear usuario administrador de prueba
-        $adminUser = User::firstOrCreate([
+        // Crear o actualizar usuario administrador de prueba
+        $adminUser = User::updateOrCreate([
             'email' => 'admin@test.com'
         ], [
             'name' => 'Administrador Test',
@@ -66,8 +66,8 @@ class TestDataSeeder extends Seeder
             'idPerfil' => $perfilAdmin->idPerfil
         ]);
 
-        // Crear usuario editor de prueba
-        $editorUser = User::firstOrCreate([
+        // Crear o actualizar usuario editor de prueba
+        $editorUser = User::updateOrCreate([
             'email' => 'editor@test.com'
         ], [
             'name' => 'Editor Test',
@@ -76,8 +76,8 @@ class TestDataSeeder extends Seeder
             'idPerfil' => $perfilEditor->idPerfil
         ]);
 
-        // Crear usuario de solo lectura
-        $lecturaUser = User::firstOrCreate([
+        // Crear o actualizar usuario de solo lectura
+        $lecturaUser = User::updateOrCreate([
             'email' => 'lectura@test.com'
         ], [
             'name' => 'Lectura Test',
@@ -86,9 +86,31 @@ class TestDataSeeder extends Seeder
             'idPerfil' => $perfilLectura->idPerfil
         ]);
 
+        // Crear o actualizar usuario de sucursal específica
+        $sucursalUser = User::updateOrCreate([
+            'email' => 'sucursal@test.com'
+        ], [
+            'name' => 'Gestor Sucursal',
+            'password' => Hash::make('password123'),
+            'email_verified_at' => now(),
+            'idPerfil' => $perfilEditor->idPerfil
+        ]);
+
+        // Asignar sucursales específicas a usuarios de prueba
+        $sucursales = \App\Models\Sucursal::take(2)->get(); // Tomar las primeras 2 sucursales
+        
+        if ($sucursales->count() > 0) {
+            // El usuario de sucursal solo puede ver las primeras 2 sucursales
+            $sucursalUser->sucursales()->sync($sucursales->pluck('idSucursal'));
+            
+            // El usuario de lectura puede ver solo la primera sucursal
+            $lecturaUser->sucursales()->sync([$sucursales->first()->idSucursal]);
+        }
+
         echo "Perfiles y usuarios de prueba creados:\n";
-        echo "Administrador: admin@test.com (password123) - Acceso completo\n";
-        echo "Editor: editor@test.com (password123) - Edición limitada\n";
-        echo "Solo Lectura: lectura@test.com (password123) - Solo ver\n";
+        echo "Administrador: admin@test.com (password123) - Acceso completo a todas las sucursales\n";
+        echo "Editor: editor@test.com (password123) - Edición limitada, todas las sucursales\n";
+        echo "Solo Lectura: lectura@test.com (password123) - Solo ver, una sucursal específica\n";
+        echo "Gestor Sucursal: sucursal@test.com (password123) - Edición de sucursales específicas\n";
     }
 }

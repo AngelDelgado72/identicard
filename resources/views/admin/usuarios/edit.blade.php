@@ -94,6 +94,40 @@
                                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                                        Sucursales Asignadas
+                                    </label>
+                                    <div class="space-y-2 max-h-40 overflow-y-auto border border-gray-300 dark:border-gray-600 rounded-md p-3">
+                                        @forelse($sucursales as $sucursal)
+                                            <div class="flex items-center">
+                                                <input type="checkbox" 
+                                                       name="sucursales[]" 
+                                                       value="{{ $sucursal->idSucursal }}"
+                                                       id="sucursal_{{ $sucursal->idSucursal }}"
+                                                       {{ 
+                                                           (is_array(old('sucursales')) && in_array($sucursal->idSucursal, old('sucursales'))) || 
+                                                           (!old('sucursales') && $usuario->sucursales->contains('idSucursal', $sucursal->idSucursal)) 
+                                                           ? 'checked' : '' 
+                                                       }}
+                                                       class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                                                <label for="sucursal_{{ $sucursal->idSucursal }}" class="ml-3 text-sm text-gray-700 dark:text-gray-300">
+                                                    <span class="font-medium">{{ $sucursal->Nombre }}</span>
+                                                    <span class="text-gray-500 dark:text-gray-400">- {{ $sucursal->empresa->Nombre ?? 'Sin empresa' }}</span>
+                                                </label>
+                                            </div>
+                                        @empty
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">No hay sucursales disponibles</p>
+                                        @endforelse
+                                    </div>
+                                    @error('sucursales')
+                                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        Selecciona las sucursales que este usuario podrá administrar. Si no seleccionas ninguna, tendrá acceso a todas.
+                                    </p>
+                                </div>
                             </div>
                         </div>
 

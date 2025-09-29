@@ -12,7 +12,15 @@ class EmpleadoController extends Controller
 {
     public function create()
     {
-        $sucursales = \App\Models\Sucursal::all();
+        $user = auth()->user();
+        
+        // Filtrar sucursales según las asignadas al usuario
+        if ($user->sucursales->count() > 0) {
+            $sucursales = $user->sucursales;
+        } else {
+            $sucursales = \App\Models\Sucursal::all();
+        }
+        
         return view('empleados.create', compact('sucursales'));
     }
 

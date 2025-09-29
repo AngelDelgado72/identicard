@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Perfil;
+use App\Models\Sucursal;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
@@ -20,7 +21,8 @@ class UsuarioController extends Controller
     public function create()
     {
         $perfiles = Perfil::where('activo', true)->get();
-        return view('admin.usuarios.create', compact('perfiles'));
+        $sucursales = Sucursal::with('empresa')->get();
+        return view('admin.usuarios.create', compact('perfiles', 'sucursales'));
     }
 
     public function store(Request $request)
@@ -30,6 +32,8 @@ class UsuarioController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'idPerfil' => 'nullable|exists:perfiles,idPerfil',
+            'sucursales' => 'nullable|array',
+            'sucursales.*' => 'exists:sucursal,idSucursal',
         ]);
 
         $usuario = User::create([
@@ -39,21 +43,27 @@ class UsuarioController extends Controller
             'idPerfil' => $request->idPerfil,
         ]);
 
+        // Asignar sucursales al usuario
+        if ($request->has('sucursales')) {
+            $usuario->sucursales()->sync($request->sucursales);
+        }
+
         return redirect()->route('admin.usuarios.index')
             ->with('success', 'Usuario creado correctamente.');
     }
 
     public function show($id)
     {
-        $usuario = User::with('perfil')->findOrFail($id);
+        $usuario = User::with(['perfil', 'sucursales.empresa'])->findOrFail($id);
         return view('admin.usuarios.show', compact('usuario'));
     }
 
     public function edit($id)
     {
-        $usuario = User::with('perfil')->findOrFail($id);
+        $usuario = User::with(['perfil', 'sucursales'])->findOrFail($id);
         $perfiles = Perfil::where('activo', true)->get();
-        return view('admin.usuarios.edit', compact('usuario', 'perfiles'));
+        $sucursales = Sucursal::with('empresa')->get();
+        return view('admin.usuarios.edit', compact('usuario', 'perfiles', 'sucursales'));
     }
 
     public function update(Request $request, $id)
@@ -65,6 +75,8 @@ class UsuarioController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'idPerfil' => 'nullable|exists:perfiles,idPerfil',
+            'sucursales' => 'nullable|array',
+            'sucursales.*' => 'exists:sucursal,idSucursal',
         ]);
 
         $data = [
@@ -79,6 +91,13 @@ class UsuarioController extends Controller
         }
 
         $usuario->update($data);
+
+        // Actualizar sucursales asignadas
+        if ($request->has('sucursales')) {
+            $usuario->sucursales()->sync($request->sucursales);
+        } else {
+            $usuario->sucursales()->detach();
+        }
 
         return redirect()->route('admin.usuarios.index')
             ->with('success', 'Usuario actualizado correctamente.');

@@ -81,4 +81,22 @@ class User extends Authenticatable
 
         return $this->perfil->permisos;
     }
+
+    // Relación muchos a muchos con sucursales
+    public function sucursales()
+    {
+        return $this->belongsToMany(Sucursal::class, 'usuario_sucursal', 'idUsuario', 'idSucursal');
+    }
+
+    // Método para verificar si el usuario puede acceder a una sucursal específica
+    public function puedeAccederSucursal($idSucursal)
+    {
+        return $this->sucursales()->where('idSucursal', $idSucursal)->exists();
+    }
+
+    // Método para obtener solo las sucursales asignadas al usuario
+    public function getSucursalesAsignadas()
+    {
+        return $this->sucursales()->get();
+    }
 }
