@@ -10,7 +10,7 @@ use App\Models\Sucursal;
 
 class EmpleadoController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
         $user = auth()->user();
         
@@ -21,7 +21,18 @@ class EmpleadoController extends Controller
             $sucursales = \App\Models\Sucursal::all();
         }
         
-        return view('empleados.create', compact('sucursales'));
+        $sucursalesSeleccionadas = [];
+        
+        // Si se pasa un parámetro sucursal, pre-seleccionarla
+        if ($request->has('sucursal')) {
+            $sucursalId = $request->get('sucursal');
+            $sucursal = \App\Models\Sucursal::find($sucursalId);
+            if ($sucursal) {
+                $sucursalesSeleccionadas[] = $sucursalId;
+            }
+        }
+        
+        return view('empleados.create', compact('sucursales', 'sucursalesSeleccionadas'));
     }
 
     public function store(Request $request)

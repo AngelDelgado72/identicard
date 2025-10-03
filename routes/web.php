@@ -8,6 +8,7 @@ use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\Api\OrganizationalController;
 
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -137,6 +139,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::middleware(['permission:usuarios,eliminar'])->group(function () {
         Route::delete('usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
     });
+});
+
+// Rutas API para información organizacional
+Route::middleware('auth')->group(function () {
+    Route::get('/api/empresa/{id}', [\App\Http\Controllers\Api\OrganizationalController::class, 'getEmpresa'])->name('api.empresa');
+    Route::get('/api/sucursal/{id}', [\App\Http\Controllers\Api\OrganizationalController::class, 'getSucursal'])->name('api.sucursal');
+    Route::get('/api/empleado/{id}', [\App\Http\Controllers\Api\OrganizationalController::class, 'getEmpleado'])->name('api.empleado');
 });
 
 require __DIR__.'/auth.php';

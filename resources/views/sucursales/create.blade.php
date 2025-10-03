@@ -24,17 +24,19 @@
                     <select name="idEmpresas" id="idEmpresas" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
                         <option value="">Selecciona una empresa</option>
                         @foreach($empresas as $empresa)
-                            <option value="{{ $empresa->idEmpresas }}">{{ $empresa->Nombre }}</option>
+                            <option value="{{ $empresa->idEmpresas }}" {{ old('idEmpresas', $empresaSeleccionada) == $empresa->idEmpresas ? 'selected' : '' }}>
+                                {{ $empresa->Nombre }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
                 <div>
                     <label for="Nombre" class="block text-sm font-medium text-white">Nombre de la sucursal</label>
-                    <input type="text" name="Nombre" id="Nombre" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
+                    <input type="text" name="Nombre" id="Nombre" value="{{ old('Nombre') }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
                 </div>
                 <div>
                     <label for="Direccion" class="block text-sm font-medium text-white">Dirección</label>
-                    <input type="text" name="Direccion" id="Direccion" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
+                    <input type="text" name="Direccion" id="Direccion" value="{{ old('Direccion') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
                 </div>
                 <button type="submit" class="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700">Registrar sucursal</button>
             </form>
