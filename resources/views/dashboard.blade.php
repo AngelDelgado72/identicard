@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Inicio') }}
         </h2>
     </x-slot>
 
@@ -119,7 +119,7 @@
                 <div class="sidebar-column">
                     <div class="sidebar-menu" id="sidebar">
                         <div class="p-4 border-b border-gray-600">
-                            <h3 class="text-white font-semibold text-lg">🌐 Navegación Organizacional</h3>
+                            <h3 class="text-white font-semibold text-lg">🌐 Navegación</h3>
                         </div>
                         <ul>
                             <li>
@@ -137,7 +137,7 @@
                                 @include('partials.menu-item-sidebar', ['item' => $item])
                             @endforeach
 
-                            <!-- Menús de administración -->
+                            <!-- Menús de administración 
                             @if(auth()->user()->hasPermission('usuarios', 'ver') || auth()->user()->hasPermission('perfiles', 'ver'))
                                 <li>
                                     <a href="#">
@@ -153,6 +153,7 @@
                                     </ul>
                                 </li>
                             @endif
+                            -->
                         </ul>
                     </div>
                 </div>
@@ -183,7 +184,7 @@
                             </div>
                         </div>
 
-                        <!-- Tarjetas de acceso rápido -->
+                        <!-- Tarjetas de acceso rápido 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                             @if(auth()->user()->hasPermission('empresas', 'ver'))
                                 <div class="bg-blue-100 dark:bg-blue-900 p-6 rounded-lg hover:shadow-lg transition-shadow">
@@ -215,8 +216,9 @@
                                 </div>
                             @endif
                         </div>
+                        -->
 
-                        <!-- Administración del Sistema -->
+                        <!-- Administración del Sistema 
                         @if(auth()->user()->hasPermission('usuarios', 'ver') || auth()->user()->hasPermission('perfiles', 'ver'))
                             <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
                                 <h4 class="text-lg font-semibold mb-4">⚙️ Administración del Sistema</h4>
@@ -243,6 +245,7 @@
                                 </div>
                             </div>
                         @endif
+                        -->
 
                         <!-- Información del usuario -->
                         <div class="mt-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">

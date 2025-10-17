@@ -13,11 +13,11 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Inicio') }}
                     </x-nav-link>
                     
                     @auth
-                        <!-- Enlaces de Gestión -->
+                        <!-- Enlaces de gestión principal -->
                         @if(auth()->user()->hasPermission('empresas', 'ver'))
                             <x-nav-link :href="route('empresas.crud')" :active="request()->routeIs('empresas.*')">
                                 {{ __('Empresas') }}
@@ -36,18 +36,23 @@
                             </x-nav-link>
                         @endif
                         
-                        <!-- Enlaces de Administración -->
-                        @if(auth()->user()->tienePermiso('perfiles', 'ver'))
+                        <!-- Enlaces de administración -->
+                        @if(auth()->user()->hasPermission('perfiles', 'ver'))
                             <x-nav-link :href="route('admin.perfiles.index')" :active="request()->routeIs('admin.perfiles.*')">
                                 {{ __('Perfiles') }}
                             </x-nav-link>
                         @endif
                         
-                        @if(auth()->user()->tienePermiso('usuarios', 'ver'))
+                        @if(auth()->user()->hasPermission('usuarios', 'ver'))
                             <x-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.*')">
                                 {{ __('Usuarios') }}
                             </x-nav-link>
                         @endif
+                        
+                        <!-- Paquetes de Impresión (temporal sin permisos) -->
+                        <x-nav-link :href="route('paquetes.index')" :active="request()->routeIs('paquetes.*')">
+                            {{ __('Paquetes') }}
+                        </x-nav-link>
                     @endauth
                 </div>
             </div>
@@ -102,11 +107,11 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Inicio') }}
             </x-responsive-nav-link>
             
             @auth
-                <!-- Enlaces de Gestión -->
+                <!-- Enlaces de gestión principal -->
                 @if(auth()->user()->hasPermission('empresas', 'ver'))
                     <x-responsive-nav-link :href="route('empresas.crud')" :active="request()->routeIs('empresas.*')">
                         {{ __('Empresas') }}
@@ -125,18 +130,23 @@
                     </x-responsive-nav-link>
                 @endif
                 
-                <!-- Enlaces de Administración -->
-                @if(auth()->user()->tienePermiso('perfiles', 'ver'))
+                <!-- Enlaces de administración -->
+                @if(auth()->user()->hasPermission('perfiles', 'ver'))
                     <x-responsive-nav-link :href="route('admin.perfiles.index')" :active="request()->routeIs('admin.perfiles.*')">
                         {{ __('Perfiles') }}
                     </x-responsive-nav-link>
                 @endif
                 
-                @if(auth()->user()->tienePermiso('usuarios', 'ver'))
+                @if(auth()->user()->hasPermission('usuarios', 'ver'))
                     <x-responsive-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.*')">
                         {{ __('Usuarios') }}
                     </x-responsive-nav-link>
                 @endif
+                
+                <!-- Paquetes de Impresión (temporal sin permisos) -->
+                <x-responsive-nav-link :href="route('paquetes.index')" :active="request()->routeIs('paquetes.*')">
+                    {{ __('Paquetes') }}
+                </x-responsive-nav-link>
             @endauth
         </div>
 

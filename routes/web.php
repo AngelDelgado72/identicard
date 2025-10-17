@@ -9,6 +9,7 @@ use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\Api\OrganizationalController;
+use App\Http\Controllers\PaqueteController;
 
 
 Route::get('/', function () {
@@ -139,6 +140,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     Route::middleware(['permission:usuarios,eliminar'])->group(function () {
         Route::delete('usuarios/{usuario}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
     });
+});
+
+// Rutas de paquetes
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('paquetes', PaqueteController::class);
+    Route::patch('paquetes/{paquete}/confirmar', [PaqueteController::class, 'confirmar'])->name('paquetes.confirmar');
+    Route::post('paquetes/{paquete}/empleados', [PaqueteController::class, 'agregarEmpleado'])->name('paquetes.agregar-empleado');
+    Route::delete('paquetes/{paquete}/empleados/{idEmpleado}', [PaqueteController::class, 'removerEmpleado'])->name('paquetes.remover-empleado');
 });
 
 // Rutas API para información organizacional
