@@ -1,0 +1,40 @@
+@startuml
+
+start
+
+:Usuario accede al módulo de Paquetes;
+
+if (¿Desea crear un nuevo paquete?) then (Sí)
+  :Usuario selecciona "Crear Paquete";
+  :Sistema muestra formulario de creación;
+  :Usuario completa y envía el formulario;
+  :Sistema guarda el paquete en estado "En creación";
+else (No)
+  if (¿Desea editar un paquete existente?) then (Sí)
+    :Usuario selecciona un paquete para editar;
+    :Sistema muestra formulario de edición;
+    :Usuario actualiza y envía el formulario;
+    :Sistema guarda los cambios;
+  else (No)
+    if (¿Desea confirmar un paquete?) then (Sí)
+      :Usuario selecciona "Confirmar" en un paquete;
+      :Sistema cambia el estado a "Confirmado";
+    else (No)
+      if (¿Desea autorizar un paquete?) then (Sí)
+        :Usuario selecciona "Autorizar" en un paquete;
+        :Sistema cambia el estado a "Autorizado";
+      else (No)
+        if (¿Desea eliminar un paquete?) then (Sí)
+          :Usuario selecciona "Eliminar" en un paquete;
+          :Sistema elimina el paquete de la base de datos;
+        else (Salir)
+          :Usuario sale del módulo;
+        endif
+      endif
+    endif
+  endif
+endif
+
+stop
+
+@enduml

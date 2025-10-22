@@ -41,6 +41,14 @@ class PermisosSeeder extends Seeder
             ['nombre' => 'Crear Perfiles', 'descripcion' => 'Crear nuevos perfiles', 'modulo' => 'perfiles', 'accion' => 'crear'],
             ['nombre' => 'Editar Perfiles', 'descripcion' => 'Modificar perfiles existentes', 'modulo' => 'perfiles', 'accion' => 'editar'],
             ['nombre' => 'Eliminar Perfiles', 'descripcion' => 'Eliminar perfiles', 'modulo' => 'perfiles', 'accion' => 'eliminar'],
+
+            // Paquetes de Impresión
+            ['nombre' => 'Ver Paquetes', 'descripcion' => 'Visualizar listado de paquetes de impresión', 'modulo' => 'paquetes', 'accion' => 'ver'],
+            ['nombre' => 'Crear Paquetes', 'descripcion' => 'Crear nuevos paquetes de impresión', 'modulo' => 'paquetes', 'accion' => 'crear'],
+            ['nombre' => 'Editar Paquetes', 'descripcion' => 'Modificar paquetes de impresión existentes', 'modulo' => 'paquetes', 'accion' => 'editar'],
+            ['nombre' => 'Eliminar Paquetes', 'descripcion' => 'Eliminar paquetes de impresión', 'modulo' => 'paquetes', 'accion' => 'eliminar'],
+            ['nombre' => 'Confirmar Paquetes', 'descripcion' => 'Confirmar paquetes de impresión', 'modulo' => 'paquetes', 'accion' => 'confirmar'],
+            ['nombre' => 'Autorizar Paquetes', 'descripcion' => 'Autorizar paquetes de impresión', 'modulo' => 'paquetes', 'accion' => 'autorizar'],
         ];
 
         foreach ($permisos as $permiso) {

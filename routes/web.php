@@ -142,12 +142,38 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
     });
 });
 
-// Rutas de paquetes
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::resource('paquetes', PaqueteController::class);
-    Route::patch('paquetes/{paquete}/confirmar', [PaqueteController::class, 'confirmar'])->name('paquetes.confirmar');
-    Route::post('paquetes/{paquete}/empleados', [PaqueteController::class, 'agregarEmpleado'])->name('paquetes.agregar-empleado');
-    Route::delete('paquetes/{paquete}/empleados/{idEmpleado}', [PaqueteController::class, 'removerEmpleado'])->name('paquetes.remover-empleado');
+// Rutas de paquetes con permisos
+Route::middleware(['auth', 'verified', 'permission:paquetes,ver'])->group(function () {
+    Route::get('/paquetes', [PaqueteController::class, 'index'])->name('paquetes.index');
+});
+
+Route::middleware(['auth', 'verified', 'permission:paquetes,crear'])->group(function () {
+    Route::get('/paquetes/create', [PaqueteController::class, 'create'])->name('paquetes.create');
+    Route::post('/paquetes', [PaqueteController::class, 'store'])->name('paquetes.store');
+    Route::post('/paquetes/{paquete}/empleados', [PaqueteController::class, 'agregarEmpleado'])->name('paquetes.agregar-empleado');
+});
+
+Route::middleware(['auth', 'verified', 'permission:paquetes,editar'])->group(function () {
+    Route::get('/paquetes/{paquete}/edit', [PaqueteController::class, 'edit'])->name('paquetes.edit');
+    Route::put('/paquetes/{paquete}', [PaqueteController::class, 'update'])->name('paquetes.update');
+    Route::patch('/paquetes/{paquete}', [PaqueteController::class, 'update']);
+    Route::delete('/paquetes/{paquete}/empleados/{idEmpleado}', [PaqueteController::class, 'removerEmpleado'])->name('paquetes.remover-empleado');
+});
+
+Route::middleware(['auth', 'verified', 'permission:paquetes,confirmar'])->group(function () {
+    Route::patch('/paquetes/{paquete}/confirmar', [PaqueteController::class, 'confirmar'])->name('paquetes.confirmar');
+});
+
+Route::middleware(['auth', 'verified', 'permission:paquetes,autorizar'])->group(function () {
+    Route::patch('/paquetes/{paquete}/autorizar', [PaqueteController::class, 'autorizar'])->name('paquetes.autorizar');
+});
+
+Route::middleware(['auth', 'verified', 'permission:paquetes,eliminar'])->group(function () {
+    Route::delete('/paquetes/{paquete}', [PaqueteController::class, 'destroy'])->name('paquetes.destroy');
+});
+
+Route::middleware(['auth', 'verified', 'permission:paquetes,ver'])->group(function () {
+    Route::get('/paquetes/{paquete}', [PaqueteController::class, 'show'])->name('paquetes.show');
 });
 
 // Rutas API para información organizacional

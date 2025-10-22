@@ -49,10 +49,11 @@
                             </x-nav-link>
                         @endif
                         
-                        <!-- Paquetes de Impresión (temporal sin permisos) -->
-                        <x-nav-link :href="route('paquetes.index')" :active="request()->routeIs('paquetes.*')">
-                            {{ __('Paquetes') }}
-                        </x-nav-link>
+                        @if(auth()->user()->hasPermission('paquetes', 'ver'))
+                            <x-nav-link :href="route('paquetes.index')" :active="request()->routeIs('paquetes.*')">
+                                {{ __('Paquetes') }}
+                            </x-nav-link>
+                        @endif
                     @endauth
                 </div>
             </div>
@@ -143,10 +144,11 @@
                     </x-responsive-nav-link>
                 @endif
                 
-                <!-- Paquetes de Impresión (temporal sin permisos) -->
-                <x-responsive-nav-link :href="route('paquetes.index')" :active="request()->routeIs('paquetes.*')">
-                    {{ __('Paquetes') }}
-                </x-responsive-nav-link>
+                @if(auth()->user()->hasPermission('paquetes', 'ver'))
+                    <x-responsive-nav-link :href="route('paquetes.index')" :active="request()->routeIs('paquetes.*')">
+                        {{ __('Paquetes') }}
+                    </x-responsive-nav-link>
+                @endif
             @endauth
         </div>
 

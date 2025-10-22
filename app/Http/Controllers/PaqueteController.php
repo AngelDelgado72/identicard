@@ -13,9 +13,27 @@ class PaqueteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $paquetes = Paquete::with(['creador', 'empleados'])->latest()->get();
+        $query = Paquete::with(['creador', 'empleados']);
+        
+        // Filtro por nombre
+        if ($request->filled('buscar')) {
+            $query->where('nombre', 'like', '%' . $request->buscar . '%');
+        }
+        
+        // Filtro por fecha
+        if ($request->filled('fecha')) {
+            $query->whereDate('fecha_creacion', $request->fecha);
+        }
+        
+        // Filtro por estatus
+        if ($request->filled('estatus')) {
+            $query->where('estatus', $request->estatus);
+        }
+        
+        $paquetes = $query->latest()->get();
+        
         return view('paquetes.index', compact('paquetes'));
     }
 
@@ -25,7 +43,16 @@ class PaqueteController extends Controller
     public function create()
     {
         $empleados = Empleado::with('sucursales')->get();
-        return view('paquetes.create', compact('empleados'));
+        
+        // Obtener puestos únicos para el filtro
+        $puestos = Empleado::whereNotNull('Puesto')
+                          ->where('Puesto', '!=', '')
+                          ->distinct()
+                          ->pluck('Puesto')
+                          ->sort()
+                          ->values();
+        
+        return view('paquetes.create', compact('empleados', 'puestos'));
     }
 
     /**
@@ -72,14 +99,23 @@ class PaqueteController extends Controller
     {
         $paquete = Paquete::findOrFail($id);
         
-        if ($paquete->estatus === 'confirmado') {
+        if (!$paquete->puedeSerEditado()) {
             return redirect()->route('paquetes.index')
-                ->with('error', 'No se puede editar un paquete confirmado.');
+                ->with('error', 'No se puede editar un paquete confirmado o autorizado.');
         }
 
         $empleados = Empleado::with('sucursales')->get();
+        
+        // Obtener puestos únicos para el filtro
+        $puestos = Empleado::whereNotNull('Puesto')
+                          ->where('Puesto', '!=', '')
+                          ->distinct()
+                          ->pluck('Puesto')
+                          ->sort()
+                          ->values();
+        
         $paquete->load('empleados');
-        return view('paquetes.edit', compact('paquete', 'empleados'));
+        return view('paquetes.edit', compact('paquete', 'empleados', 'puestos'));
     }
 
     /**
@@ -89,9 +125,9 @@ class PaqueteController extends Controller
     {
         $paquete = Paquete::findOrFail($id);
         
-        if ($paquete->estatus === 'confirmado') {
+        if (!$paquete->puedeSerEditado()) {
             return redirect()->route('paquetes.index')
-                ->with('error', 'No se puede editar un paquete confirmado.');
+                ->with('error', 'No se puede editar un paquete confirmado o autorizado.');
         }
 
         $request->validate([
@@ -122,9 +158,9 @@ class PaqueteController extends Controller
     {
         $paquete = Paquete::findOrFail($id);
         
-        if ($paquete->estatus === 'confirmado') {
+        if (!$paquete->puedeSerEditado()) {
             return redirect()->route('paquetes.index')
-                ->with('error', 'No se puede eliminar un paquete confirmado.');
+                ->with('error', 'No se puede eliminar un paquete confirmado o autorizado.');
         }
 
         $paquete->empleados()->detach();
@@ -146,10 +182,43 @@ class PaqueteController extends Controller
                 ->with('error', 'El paquete ya está confirmado.');
         }
 
+        if ($paquete->estatus === 'autorizado') {
+            return redirect()->route('paquetes.index')
+                ->with('error', 'El paquete ya está autorizado.');
+        }
+
         $paquete->update(['estatus' => 'confirmado']);
 
         return redirect()->route('paquetes.index')
             ->with('success', 'Paquete confirmado exitosamente.');
+    }
+
+    /**
+     * Autorizar un paquete
+     */
+    public function autorizar($id)
+    {
+        $paquete = Paquete::with('empleados')->findOrFail($id);
+        
+        if ($paquete->estatus === 'autorizado') {
+            return redirect()->route('paquetes.index')
+                ->with('error', 'El paquete ya está autorizado.');
+        }
+
+        if ($paquete->estatus !== 'confirmado') {
+            return redirect()->route('paquetes.index')
+                ->with('error', 'Solo se pueden autorizar paquetes confirmados.');
+        }
+
+        if (!$paquete->todosEmpleadosValidados()) {
+            return redirect()->route('paquetes.index')
+                ->with('error', 'No se puede autorizar el paquete. Todos los empleados deben estar validados.');
+        }
+
+        $paquete->update(['estatus' => 'autorizado']);
+
+        return redirect()->route('paquetes.index')
+            ->with('success', 'Paquete autorizado exitosamente.');
     }
 
     /**
@@ -159,8 +228,8 @@ class PaqueteController extends Controller
     {
         $paquete = Paquete::findOrFail($id);
         
-        if ($paquete->estatus === 'confirmado') {
-            return response()->json(['error' => 'No se puede modificar un paquete confirmado.'], 400);
+        if (!$paquete->puedeSerEditado()) {
+            return response()->json(['error' => 'No se puede modificar un paquete confirmado o autorizado.'], 400);
         }
 
         $request->validate([
@@ -182,8 +251,8 @@ class PaqueteController extends Controller
     {
         $paquete = Paquete::findOrFail($id);
         
-        if ($paquete->estatus === 'confirmado') {
-            return response()->json(['error' => 'No se puede modificar un paquete confirmado.'], 400);
+        if (!$paquete->puedeSerEditado()) {
+            return response()->json(['error' => 'No se puede modificar un paquete confirmado o autorizado.'], 400);
         }
 
         $paquete->empleados()->detach($idEmpleado);
