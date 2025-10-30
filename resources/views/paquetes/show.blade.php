@@ -19,6 +19,16 @@
                             Volver al Listado
                         </a>
                     @endif
+                    @if($paquete->estatus === 'autorizado' && auth()->user()->hasPermission('paquetes', 'ver'))
+                        <a href="{{ route('paquetes.credenciales', $paquete->idPaquete) }}" 
+                           target="_blank"
+                           class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 inline-flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                            </svg>
+                            Imprimir Credenciales
+                        </a>
+                    @endif
                     @if($paquete->puedeSerEditado() && auth()->user()->hasPermission('paquetes', 'editar'))
                         <a href="{{ route('paquetes.edit', $paquete->idPaquete) }}" 
                            class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700">
@@ -112,7 +122,7 @@
                                     Autorizar Paquete
                                 </button>
                             </form>
-                        @else
+                        @elseif(!$paquete->todosEmpleadosValidados())
                             <div class="bg-yellow-900 border border-yellow-600 rounded-md p-4">
                                 <div class="flex">
                                     <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
@@ -129,6 +139,17 @@
                                 </div>
                             </div>
                         @endif
+                    </div>
+                @elseif($paquete->estatus === 'autorizado')
+                    <div class="mt-6 pt-4 border-t border-gray-600">
+                        <a href="{{ route('paquetes.credenciales', $paquete->idPaquete) }}" 
+                           target="_blank"
+                           class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 inline-flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                            </svg>
+                            Imprimir Credenciales
+                        </a>
                     </div>
                 @endif
             </div>

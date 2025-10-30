@@ -258,4 +258,20 @@ class PaqueteController extends Controller
         $paquete->empleados()->detach($idEmpleado);
         return response()->json(['success' => 'Empleado removido del paquete.']);
     }
+
+    /**
+     * Mostrar vista de impresión de credenciales
+     */
+    public function imprimirCredenciales($id)
+    {
+        $paquete = Paquete::with(['empleados.sucursales', 'empleados.sucursal'])->findOrFail($id);
+        
+        // Verificar que el paquete esté autorizado
+        if ($paquete->estatus !== 'autorizado') {
+            return redirect()->route('paquetes.show', $paquete->idPaquete)
+                ->with('error', 'Solo se pueden imprimir credenciales de paquetes autorizados.');
+        }
+        
+        return view('paquetes.credenciales', compact('paquete'));
+    }
 }

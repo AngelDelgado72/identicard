@@ -174,6 +174,7 @@ Route::middleware(['auth', 'verified', 'permission:paquetes,eliminar'])->group(f
 
 Route::middleware(['auth', 'verified', 'permission:paquetes,ver'])->group(function () {
     Route::get('/paquetes/{paquete}', [PaqueteController::class, 'show'])->name('paquetes.show');
+    Route::get('/paquetes/{paquete}/credenciales', [PaqueteController::class, 'imprimirCredenciales'])->name('paquetes.credenciales');
 });
 
 // Rutas API para información organizacional
