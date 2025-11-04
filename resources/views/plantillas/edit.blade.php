@@ -21,7 +21,12 @@
                     <!-- Panel izquierdo - Campos disponibles -->
                     <div class="lg:col-span-1">
                         <div class="bg-gray-800 rounded-lg p-4 sticky top-4">
-                            <h3 class="text-white font-semibold mb-4">📦 Campos Disponibles</h3>
+                            <h3 class="text-white font-semibold mb-4 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                </svg>
+                                Campos Disponibles
+                            </h3>
                             <p class="text-xs text-gray-400 mb-4">Arrastra los campos a la plantilla</p>
 
                             <div class="space-y-2" id="campos-disponibles">
@@ -31,14 +36,22 @@
                                          data-campo-id="{{ $campo['id'] }}"
                                          data-campo-nombre="{{ $campo['nombre'] }}"
                                          data-campo-tipo="{{ $campo['tipo'] }}">
-                                        <span class="text-lg">{{ $campo['icono'] }}</span>
+                                        <span class="inline-flex items-center">
+                                            {!! $campo['icono'] !!}
+                                        </span>
                                         <span class="text-sm text-white ml-2">{{ $campo['nombre'] }}</span>
                                     </div>
                                 @endforeach
                             </div>
 
                             <div class="mt-6 pt-4 border-t border-gray-600">
-                                <h4 class="text-white font-semibold mb-2">⚙️ Configuración</h4>
+                                <h4 class="text-white font-semibold mb-2 flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    Configuración
+                                </h4>
                                 
                                 <div class="space-y-3">
                                     <div>
@@ -71,8 +84,11 @@
                             </div>
 
                             <div class="mt-6">
-                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded">
-                                    💾 Guardar Configuración
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded inline-flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" />
+                                    </svg>
+                                    Guardar Configuración
                                 </button>
                             </div>
                         </div>
@@ -84,13 +100,19 @@
                         <div class="bg-gray-800 rounded-t-lg">
                             <div class="flex border-b border-gray-700">
                                 <button type="button" onclick="switchTab('frontal')" id="tab-frontal"
-                                        class="px-6 py-3 text-white font-semibold border-b-2 border-blue-500">
-                                    🎴 Frontal
+                                        class="px-6 py-3 text-white font-semibold border-b-2 border-blue-500 inline-flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                                    </svg>
+                                    Frontal
                                 </button>
                                 @if($plantilla->imagen_trasera)
                                 <button type="button" onclick="switchTab('trasera')" id="tab-trasera"
-                                        class="px-6 py-3 text-gray-400 font-semibold border-b-2 border-transparent hover:text-white">
-                                    🎴 Trasera
+                                        class="px-6 py-3 text-gray-400 font-semibold border-b-2 border-transparent hover:text-white inline-flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                                    </svg>
+                                    Trasera
                                 </button>
                                 @endif
                             </div>
@@ -106,9 +128,12 @@
                             </div>
 
                             <div class="mt-4 bg-gray-800 rounded p-3">
-                                <p class="text-xs text-gray-300">
-                                    💡 <strong>Cómo usar:</strong> Arrastra campos desde el panel izquierdo. Haz clic en un campo para ajustar tamaño y estilo.
-                                    Haz clic derecho para eliminar. El canvas tiene el tamaño real de la credencial ({{ $plantilla->ancho_mm }}mm x {{ $plantilla->alto_mm }}mm).
+                                <p class="text-xs text-gray-300 flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                                    </svg>
+                                    <span><strong>Cómo usar:</strong> Arrastra campos desde el panel izquierdo. Haz clic en un campo para ajustar tamaño y estilo.
+                                    Haz clic derecho para eliminar. El canvas tiene el tamaño real de la credencial ({{ $plantilla->ancho_mm }}mm x {{ $plantilla->alto_mm }}mm).</span>
                                 </p>
                             </div>
                         </div>
@@ -124,8 +149,11 @@
                             </div>
 
                             <div class="mt-4 bg-gray-800 rounded p-3">
-                                <p class="text-xs text-gray-300">
-                                    💡 Configura la parte trasera de la credencial ({{ $plantilla->ancho_mm }}mm x {{ $plantilla->alto_mm }}mm)
+                                <p class="text-xs text-gray-300 flex items-start">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                                    </svg>
+                                    Configura la parte trasera de la credencial ({{ $plantilla->ancho_mm }}mm x {{ $plantilla->alto_mm }}mm)
                                 </p>
                             </div>
                         </div>
@@ -133,7 +161,13 @@
 
                         <!-- Panel de propiedades del campo seleccionado -->
                         <div id="panel-propiedades" class="mt-4 bg-gray-800 rounded-lg p-4 hidden">
-                            <h4 class="text-white font-semibold mb-3">⚙️ Propiedades del Campo</h4>
+                            <h4 class="text-white font-semibold mb-3 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Propiedades del Campo
+                            </h4>
                             <div class="grid grid-cols-3 gap-4">
                                 <div>
                                     <label class="block text-xs text-gray-400 mb-1">Tamaño Fuente (px)</label>

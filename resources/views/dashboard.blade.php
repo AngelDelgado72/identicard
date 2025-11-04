@@ -188,7 +188,12 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                             @if(auth()->user()->hasPermission('empresas', 'ver'))
                                 <div class="bg-blue-100 dark:bg-blue-900 p-6 rounded-lg hover:shadow-lg transition-shadow">
-                                    <h4 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">🏢 Empresas</h4>
+                                    <h4 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                                        </svg>
+                                        Empresas
+                                    </h4>
                                     <p class="text-blue-600 dark:text-blue-300 mb-4">Gestiona las empresas del sistema</p>
                                     <a href="{{ route('empresas.crud') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
                                         Ver empresas
@@ -208,7 +213,12 @@
 
                             @if(auth()->user()->hasPermission('empleados', 'ver'))
                                 <div class="bg-purple-100 dark:bg-purple-900 p-6 rounded-lg hover:shadow-lg transition-shadow">
-                                    <h4 class="text-lg font-semibold text-purple-800 dark:text-purple-200 mb-2">👤 Empleados</h4>
+                                    <h4 class="text-lg font-semibold text-purple-800 dark:text-purple-200 mb-2 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                        </svg>
+                                        Empleados
+                                    </h4>
                                     <p class="text-purple-600 dark:text-purple-300 mb-4">Gestiona los empleados</p>
                                     <a href="{{ route('empleados.crud') }}" class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
                                         Ver empleados
@@ -251,11 +261,17 @@
                         <div class="mt-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-300">
-                                        <strong>👤 Perfil:</strong> {{ auth()->user()->perfil->nombre ?? 'Sin perfil asignado' }}
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                        </svg>
+                                        <strong>Perfil:</strong> {{ auth()->user()->perfil->nombre ?? 'Sin perfil asignado' }}
                                     </p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                                        <strong>🔐 Permisos:</strong> 
+                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                        </svg>
+                                        <strong>Permisos:</strong> 
                                         {{ auth()->user()->perfil ? auth()->user()->perfil->permisos->count() : 0 }} permisos asignados
                                     </p>
                                 </div>
@@ -317,7 +333,11 @@
                 accessCards += `
                     <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                         <div class="text-center">
-                            <div class="text-4xl mb-3">🏢</div>
+                            <div class="mb-3 flex justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-blue-600">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                                </svg>
+                            </div>
                             <h4 class="text-lg font-semibold mb-2">Gestión de Empresas</h4>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">Administra todas las empresas del sistema</p>
                             <a href="/empresas/crud" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
@@ -332,7 +352,11 @@
                 accessCards += `
                     <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                         <div class="text-center">
-                            <div class="text-4xl mb-3">�</div>
+                            <div class="mb-3 flex justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-green-600">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
+                                </svg>
+                            </div>
                             <h4 class="text-lg font-semibold mb-2">Gestión de Sucursales</h4>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">Administra sucursales por empresa</p>
                             <a href="/sucursales/crud" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
@@ -347,7 +371,11 @@
                 accessCards += `
                     <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
                         <div class="text-center">
-                            <div class="text-4xl mb-3">👤</div>
+                            <div class="mb-3 flex justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-purple-600">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                </svg>
+                            </div>
                             <h4 class="text-lg font-semibold mb-2">Gestión de Empleados</h4>
                             <p class="text-gray-600 dark:text-gray-300 mb-4">Administra empleados y validaciones</p>
                             <a href="/empleados/crud" class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
@@ -501,7 +529,12 @@
                         ← Volver al Dashboard
                     </button>
                 </div>
-                <h1 class="text-2xl font-bold mb-6">🏢 ${empresa.nombre}</h1>
+                <h1 class="text-2xl font-bold mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                    </svg>
+                    ${empresa.nombre}
+                </h1>
                 <div class="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg">
                     <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-4">Información de la Empresa</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -518,11 +551,17 @@
                     </div>
                     ${sucursalesHtml}
                     <div class="mt-6 text-center space-x-4">
-                        <a href="/sucursales/create?empresa=${empresa.id}" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
-                            ➕ Agregar Sucursal
+                        <a href="/sucursales/create?empresa=${empresa.id}" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors inline-flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            Agregar Sucursal
                         </a>
-                        <a href="/empresas/${empresa.id}/edit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-                            📋 Editar Empresa
+                        <a href="/empresas/${empresa.id}/edit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors inline-flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                            </svg>
+                            Editar Empresa
                         </a>
                     </div>
                 </div>
@@ -547,8 +586,12 @@
                                     <p class="text-sm text-gray-600 dark:text-gray-400">Tipo de sange: ${empleado.tipo_sangre || 'No definido'}</p>
                                     <p class="text-sm text-gray-600 dark:text-gray-400">Validado: ${empleado.validado}</p>
                                     <div class="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
-                                        <a href="/empleados/${empleado.id}" class="text-xs px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-                                            🔍 Ver Detalles
+                                        <a href="/empleados/${empleado.id}" class="text-xs px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors inline-flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            Ver Detalles
                                         </a>
                                     </div>
                                 </div>
@@ -570,7 +613,12 @@
                         ← Volver al Dashboard
                     </button>
                 </div>
-                <h1 class="text-2xl font-bold mb-6">🏪 ${sucursal.nombre}</h1>
+                <h1 class="text-2xl font-bold mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
+                    </svg>
+                    ${sucursal.nombre}
+                </h1>
                 <div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg">
                     <h3 class="text-lg font-semibold text-green-800 dark:text-green-200 mb-4">Información de la Sucursal</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -587,8 +635,11 @@
                     </div>
                     ${empleadosHtml}
                     <div class="mt-6 text-center space-x-4">
-                        <a href="/empleados/create?sucursal=${sucursal.id}" class="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
-                            ➕ Agregar Empleado
+                        <a href="/empleados/create?sucursal=${sucursal.id}" class="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors inline-flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                            Agregar Empleado
                         </a>
                         <a href="/sucursales/${sucursal.id}/edit" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
                             🏪 Editar Sucursal
@@ -605,7 +656,12 @@
                         ← Volver al Dashboard
                     </button>
                 </div>
-                <h1 class="text-2xl font-bold mb-6">👤 ${empleado.nombre}</h1>
+                <h1 class="text-2xl font-bold mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                    ${empleado.nombre}
+                </h1>
                 <div class="bg-purple-50 dark:bg-purple-900 p-6 rounded-lg">
                     <h3 class="text-lg font-semibold text-purple-800 dark:text-purple-200 mb-4">Información del Empleado</h3>
                     
