@@ -177,6 +177,17 @@ Route::middleware(['auth', 'verified', 'permission:paquetes,ver'])->group(functi
     Route::get('/paquetes/{paquete}/credenciales', [PaqueteController::class, 'imprimirCredenciales'])->name('paquetes.credenciales');
 });
 
+// Rutas de plantillas de credenciales
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/plantillas', [\App\Http\Controllers\PlantillaCredencialController::class, 'index'])->name('plantillas.index');
+    Route::get('/plantillas/create', [\App\Http\Controllers\PlantillaCredencialController::class, 'create'])->name('plantillas.create');
+    Route::post('/plantillas', [\App\Http\Controllers\PlantillaCredencialController::class, 'store'])->name('plantillas.store');
+    Route::get('/plantillas/{plantilla}/edit', [\App\Http\Controllers\PlantillaCredencialController::class, 'edit'])->name('plantillas.edit');
+    Route::put('/plantillas/{plantilla}', [\App\Http\Controllers\PlantillaCredencialController::class, 'update'])->name('plantillas.update');
+    Route::delete('/plantillas/{plantilla}', [\App\Http\Controllers\PlantillaCredencialController::class, 'destroy'])->name('plantillas.destroy');
+    Route::post('/plantillas/{plantilla}/activar', [\App\Http\Controllers\PlantillaCredencialController::class, 'activar'])->name('plantillas.activar');
+});
+
 // Rutas API para información organizacional
 Route::middleware('auth')->group(function () {
     Route::get('/api/empresa/{id}', [\App\Http\Controllers\Api\OrganizationalController::class, 'getEmpresa'])->name('api.empresa');

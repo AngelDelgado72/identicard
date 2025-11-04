@@ -14,12 +14,13 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
-            padding: 20px;
         }
 
         .no-print {
-            margin-bottom: 20px;
+            padding: 20px;
             text-align: center;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .btn-print {
@@ -37,419 +38,502 @@
             background-color: #4338CA;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header-info {
-            background: white;
+        /* Vista previa en pantalla */
+        .preview-container {
             padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .header-info h1 {
-            color: #1F2937;
-            margin-bottom: 10px;
-        }
-
-        .header-info p {
-            color: #6B7280;
-            margin: 5px 0;
-        }
-
-        .credenciales-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             gap: 20px;
-            margin-bottom: 20px;
         }
 
-        /* Asegurar que las imágenes se carguen correctamente */
-        img {
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            color-adjust: exact;
-        }
-
-        .credencial {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            overflow: hidden;
+        /* Cada página de credencial */
+        .credencial-page {
+            page-break-after: always;
             page-break-inside: avoid;
-            border: 2px solid #E5E7EB;
+            display: none; /* Ocultar en vista previa */
         }
 
-        .credencial-header {
-            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
-            color: white;
-            padding: 15px 20px;
-            text-align: center;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            color-adjust: exact;
+        .credencial-container {
+            position: relative;
+            width: {{ $plantilla->ancho_mm }}mm;
+            height: {{ $plantilla->alto_mm }}mm;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: visible;
         }
 
-        .credencial-header h2 {
-            font-size: 18px;
-            margin-bottom: 5px;
+        .credencial-lado {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: {{ $plantilla->ancho_mm }}mm {{ $plantilla->alto_mm }}mm;
+            background-position: 0 0;
+            background-repeat: no-repeat;
         }
 
-        .credencial-header .empresa {
-            font-size: 12px;
-            opacity: 0.9;
+        .campo-dato {
+            position: absolute;
+            overflow: visible;
         }
 
-        .credencial-body {
-            padding: 20px;
-        }
-
-        .foto-container {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .foto {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #E5E7EB;
-            background-color: #F3F4F6;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            color-adjust: exact;
-        }
-
-        .no-foto {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-color: #E5E7EB;
+        .campo-texto {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            border: 4px solid #D1D5DB;
+            justify-content: flex-start;
+            word-wrap: break-word;
+            white-space: normal;
+            line-height: 1;
+            overflow: visible;
         }
 
-        .no-foto svg {
-            width: 60px;
-            height: 60px;
-            color: #9CA3AF;
+        .campo-imagen {
+            overflow: hidden;
         }
 
-        .empleado-nombre {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .empleado-nombre h3 {
-            font-size: 20px;
-            color: #1F2937;
-            margin-bottom: 5px;
-        }
-
-        .empleado-info {
-            margin-bottom: 15px;
-        }
-
-        .info-row {
-            display: flex;
-            padding: 8px 0;
-            border-bottom: 1px solid #F3F4F6;
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-label {
-            font-weight: bold;
-            color: #4B5563;
-            min-width: 140px;
-            font-size: 13px;
-        }
-
-        .info-value {
-            color: #1F2937;
-            flex: 1;
-            font-size: 13px;
-        }
-
-        .sucursales-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
-        }
-
-        .badge {
-            background-color: #DBEAFE;
-            color: #1E40AF;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .status-validado {
-            background-color: #D1FAE5;
-            color: #065F46;
-        }
-
-        .status-pendiente {
-            background-color: #FEE2E2;
-            color: #991B1B;
-        }
-
-        .firma-container {
-            margin-top: 15px;
-            text-align: center;
-            border-top: 1px solid #E5E7EB;
-            padding-top: 15px;
-        }
-
-        .firma {
-            max-width: 150px;
-            max-height: 60px;
-            margin: 0 auto;
-            display: block;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            color-adjust: exact;
-        }
-
-        .firma-label {
-            font-size: 11px;
-            color: #6B7280;
-            margin-top: 5px;
+        .campo-imagen img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         /* Estilos de impresión */
         @media print {
-            body {
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            html, body {
                 background-color: white;
+                margin: 0;
                 padding: 0;
+                width: 100%;
+                height: 100%;
             }
 
             .no-print {
                 display: none !important;
             }
 
-            .header-info {
+            .preview-container {
                 display: none !important;
             }
 
-            .credenciales-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-
-            .credencial {
-                box-shadow: none;
-                border: 2px solid #E5E7EB;
+            .credencial-page {
+                display: block !important;
+                page-break-after: always;
+                page-break-before: auto;
                 page-break-inside: avoid;
-                margin-bottom: 15px;
+                margin: 0;
+                padding: 0;
+                width: 210mm;
+                height: 297mm;
+                position: relative;
+                overflow: hidden;
             }
 
-            /* Asegurar que el gradiente se imprima */
-            .credencial-header {
-                background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%) !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
+            .credencial-page:last-child {
+                page-break-after: auto;
+            }
+
+            .credencial-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                width: {{ $plantilla->ancho_mm }}mm;
+                height: {{ $plantilla->alto_mm }}mm;
+                overflow: visible;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            .credencial-lado {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color-adjust: exact;
+                background-size: {{ $plantilla->ancho_mm }}mm {{ $plantilla->alto_mm }}mm;
+                background-position: 0 0;
+            }
+
+            .campo-dato {
+                overflow: visible;
+            }
+
+            .campo-texto {
+                overflow: visible;
+            }
+
+            .campo-imagen {
+                overflow: hidden;
             }
 
             /* Asegurar que las imágenes se impriman */
-            img {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-                display: block !important;
+            .campo-imagen img {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color-adjust: exact;
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
             }
 
-            .foto, .firma {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
-
-            /* Asegurar que los badges se impriman con colores */
-            .badge, .status-badge {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
-
-            /* Asegurar que cada credencial se imprima correctamente */
             @page {
-                size: A4;
-                margin: 10mm;
-            }
-        }
-
-        /* Para pantallas pequeñas */
-        @media screen and (max-width: 768px) {
-            .credenciales-grid {
-                grid-template-columns: 1fr;
+                size: A4 portrait;
+                margin: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Botón de impresión (solo visible en pantalla) -->
-        <div class="no-print">
-            <button onclick="window.print()" class="btn-print">
-                🖨️ Imprimir Credenciales
-            </button>
-        </div>
+    <!-- Botón de impresión (solo visible en pantalla) -->
+    <div class="no-print">
+        <button onclick="window.print()" class="btn-print">
+            🖨️ Imprimir Credenciales
+        </button>
+        <p style="margin-top: 10px; color: #6B7280;">
+            <strong>Paquete:</strong> {{ $paquete->nombre }} | 
+            <strong>Empleados:</strong> {{ $paquete->empleados->count() }} | 
+            <strong>Plantilla:</strong> {{ $plantilla->nombre }}
+        </p>
+    </div>
 
-        <!-- Información del paquete -->
-        <div class="header-info no-print">
-            <h1>{{ $paquete->nombre }}</h1>
-            <p><strong>Descripción:</strong> {{ $paquete->descripcion ?: 'Sin descripción' }}</p>
-            <p><strong>Fecha de Creación:</strong> {{ $paquete->fecha_creacion->format('d/m/Y') }}</p>
-            <p><strong>Estatus:</strong> <span style="color: #059669; font-weight: bold;">{{ $paquete->texto_estatus }}</span></p>
-            <p><strong>Total de Empleados:</strong> {{ $paquete->empleados->count() }}</p>
-        </div>
+    <!-- Vista previa en pantalla -->
+    <div class="preview-container no-print">
 
-        <!-- Grid de credenciales -->
-        <div class="credenciales-grid">
-            @foreach($paquete->empleados as $empleado)
-                <div class="credencial">
-                    <!-- Header de la credencial -->
-                    <div class="credencial-header">
-                        <h2>CREDENCIAL DE EMPLEADO</h2>
-                        <div class="empresa">{{ config('app.name', 'Identicard') }}</div>
-                    </div>
-
-                    <!-- Cuerpo de la credencial -->
-                    <div class="credencial-body">
-                        <!-- Foto -->
-                        <div class="foto-container">
-                            @if($empleado->Foto)
-                                <img src="{{ asset($empleado->Foto) }}" 
-                                     alt="Foto de {{ $empleado->Nombre }}" 
-                                     class="foto"
-                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                <div class="no-foto" style="display: none;">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                </div>
-                            @else
-                                <div class="no-foto">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                </div>
-                            @endif
-                        </div>
-
-                        <!-- Nombre del empleado -->
-                        <div class="empleado-nombre">
-                            <h3>{{ $empleado->Nombre }} {{ $empleado->Apellido }}</h3>
-                            <span class="status-badge {{ $empleado->Validado ? 'status-validado' : 'status-pendiente' }}">
-                                {{ $empleado->Validado ? 'Validado' : 'Pendiente' }}
-                            </span>
-                        </div>
-
-                        <!-- Información del empleado -->
-                        <div class="empleado-info">
-                            <div class="info-row">
-                                <span class="info-label">Puesto:</span>
-                                <span class="info-value">{{ $empleado->Puesto ?: 'No especificado' }}</span>
-                            </div>
-
-                            <div class="info-row">
-                                <span class="info-label">Departamento:</span>
-                                <span class="info-value">{{ $empleado->Departamento ?: 'No especificado' }}</span>
-                            </div>
-
-                            <div class="info-row">
-                                <span class="info-label">RFC:</span>
-                                <span class="info-value">{{ $empleado->RFC ?: 'No especificado' }}</span>
-                            </div>
-
-                            <div class="info-row">
-                                <span class="info-label">NSS:</span>
-                                <span class="info-value">{{ $empleado->NumeroSeguroSocial ?: 'No especificado' }}</span>
-                            </div>
-
-                            <div class="info-row">
-                                <span class="info-label">Correo:</span>
-                                <span class="info-value">{{ $empleado->Correo ?: 'No especificado' }}</span>
-                            </div>
-
-                            <div class="info-row">
-                                <span class="info-label">Tipo de Sangre:</span>
-                                <span class="info-value">{{ $empleado->TipoSangre ?: 'No especificado' }}</span>
-                            </div>
-
-                            <div class="info-row">
-                                <span class="info-label">Código RH:</span>
-                                <span class="info-value">{{ $empleado->CodigoRH ?: 'No especificado' }}</span>
-                            </div>
-
-                            <div class="info-row">
-                                <span class="info-label">Sucursales:</span>
-                                <div class="info-value">
-                                    @php
-                                        $todasSucursales = collect();
-                                        if($empleado->sucursal) {
-                                            $todasSucursales->push($empleado->sucursal);
-                                        }
-                                        $todasSucursales = $todasSucursales->merge($empleado->sucursales)->unique('idSucursal');
-                                    @endphp
+        @foreach($paquete->empleados as $empleado)
+            <div style="margin-bottom: 30px; text-align: center;">
+                <h3 style="color: #4F46E5; margin-bottom: 10px;">{{ $empleado->Nombre }} {{ $empleado->Apellido }}</h3>
+                
+                <!-- Vista previa Frontal -->
+                <div class="credencial-container">
+                    <div class="credencial-lado" style="background-image: url('{{ asset('storage/' . $plantilla->imagen_frontal) }}');">
+                        @if($plantilla->campos_frontal)
+                            @foreach($plantilla->campos_frontal as $campo)
+                                @php
+                                    $config = $campo['config'] ?? [];
+                                    $valor = '';
                                     
-                                    @if($todasSucursales->count() > 0)
-                                        <div class="sucursales-badges">
-                                            @foreach($todasSucursales as $sucursal)
-                                                <span class="badge">{{ $sucursal->Nombre }}</span>
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        <span style="color: #9CA3AF; font-style: italic;">Sin sucursales</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+                                    switch($campo['id']) {
+                                        case 'nombre':
+                                            $valor = $empleado->Nombre . ' ' . $empleado->Apellido;
+                                            break;
+                                        case 'puesto':
+                                            $valor = $empleado->Puesto ?? '';
+                                            break;
+                                        case 'departamento':
+                                            $valor = $empleado->Departamento ?? '';
+                                            break;
+                                        case 'rfc':
+                                            $valor = $empleado->RFC ?? '';
+                                            break;
+                                        case 'nss':
+                                            $valor = $empleado->NumeroSeguroSocial ?? '';
+                                            break;
+                                        case 'correo':
+                                            $valor = $empleado->Correo ?? '';
+                                            break;
+                                        case 'tipo_sangre':
+                                            $valor = $empleado->TipoSangre ?? '';
+                                            break;
+                                        case 'codigo_rh':
+                                            $valor = $empleado->CodigoRH ?? '';
+                                            break;
+                                        case 'sucursales':
+                                            $sucursales = collect();
+                                            if($empleado->sucursal) $sucursales->push($empleado->sucursal->Nombre);
+                                            foreach($empleado->sucursales as $suc) {
+                                                if(!$sucursales->contains($suc->Nombre)) {
+                                                    $sucursales->push($suc->Nombre);
+                                                }
+                                            }
+                                            $valor = $sucursales->implode(', ');
+                                            break;
+                                    }
+                                @endphp
 
-                        <!-- Firma -->
-                        @if($empleado->Firma)
-                            <div class="firma-container">
-                                <img src="{{ asset($empleado->Firma) }}" 
-                                     alt="Firma de {{ $empleado->Nombre }}" 
-                                     class="firma">
-                                <div class="firma-label">Firma del Empleado</div>
-                            </div>
+                                @if($campo['tipo'] === 'texto')
+                                    <div class="campo-dato campo-texto" 
+                                         style="left: {{ $campo['x'] }}px; 
+                                                top: {{ $campo['y'] }}px;
+                                                width: {{ $config['width'] ?? 150 }}px;
+                                                min-height: {{ $config['height'] ?? 20 }}px;
+                                                font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                color: {{ $config['color'] ?? '#000000' }};
+                                                font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                text-align: {{ $config['align'] ?? 'left' }};">
+                                        {{ $valor }}
+                                    </div>
+                                @elseif($campo['tipo'] === 'imagen')
+                                    <div class="campo-dato campo-imagen" 
+                                         style="left: {{ $campo['x'] }}px; 
+                                                top: {{ $campo['y'] }}px;
+                                                width: {{ $config['width'] ?? 100 }}px;
+                                                height: {{ $config['height'] ?? 100 }}px;">
+                                        @if($campo['id'] === 'foto' && $empleado->Foto)
+                                            <img src="{{ asset($empleado->Foto) }}" alt="Foto">
+                                        @elseif($campo['id'] === 'firma' && $empleado->Firma)
+                                            <img src="{{ asset($empleado->Firma) }}" alt="Firma">
+                                        @endif
+                                    </div>
+                                @endif
+                            @endforeach
                         @endif
                     </div>
                 </div>
-            @endforeach
-        </div>
+                <p style="color: #6B7280; font-size: 14px;">Frontal</p>
+
+                @if($plantilla->imagen_trasera)
+                    <!-- Vista previa Trasera -->
+                    <div class="credencial-container" style="margin-top: 15px;">
+                        <div class="credencial-lado" style="background-image: url('{{ asset('storage/' . $plantilla->imagen_trasera) }}');">
+                            @if($plantilla->campos_trasera)
+                                @foreach($plantilla->campos_trasera as $campo)
+                                    @php
+                                        $config = $campo['config'] ?? [];
+                                        $valor = '';
+                                        
+                                        switch($campo['id']) {
+                                            case 'nombre':
+                                                $valor = $empleado->Nombre . ' ' . $empleado->Apellido;
+                                                break;
+                                            case 'puesto':
+                                                $valor = $empleado->Puesto ?? '';
+                                                break;
+                                            case 'departamento':
+                                                $valor = $empleado->Departamento ?? '';
+                                                break;
+                                            case 'rfc':
+                                                $valor = $empleado->RFC ?? '';
+                                                break;
+                                            case 'nss':
+                                                $valor = $empleado->NumeroSeguroSocial ?? '';
+                                                break;
+                                            case 'correo':
+                                                $valor = $empleado->Correo ?? '';
+                                                break;
+                                            case 'tipo_sangre':
+                                                $valor = $empleado->TipoSangre ?? '';
+                                                break;
+                                            case 'codigo_rh':
+                                                $valor = $empleado->CodigoRH ?? '';
+                                                break;
+                                            case 'sucursales':
+                                                $sucursales = collect();
+                                                if($empleado->sucursal) $sucursales->push($empleado->sucursal->Nombre);
+                                                foreach($empleado->sucursales as $suc) {
+                                                    if(!$sucursales->contains($suc->Nombre)) {
+                                                        $sucursales->push($suc->Nombre);
+                                                    }
+                                                }
+                                                $valor = $sucursales->implode(', ');
+                                                break;
+                                        }
+                                    @endphp
+
+                                    @if($campo['tipo'] === 'texto')
+                                        <div class="campo-dato campo-texto" 
+                                             style="left: {{ $campo['x'] }}px; 
+                                                    top: {{ $campo['y'] }}px;
+                                                    width: {{ $config['width'] ?? 150 }}px;
+                                                    min-height: {{ $config['height'] ?? 20 }}px;
+                                                    font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                    color: {{ $config['color'] ?? '#000000' }};
+                                                    font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                    text-align: {{ $config['align'] ?? 'left' }};">
+                                            {{ $valor }}
+                                        </div>
+                                    @elseif($campo['tipo'] === 'imagen')
+                                        <div class="campo-dato campo-imagen" 
+                                             style="left: {{ $campo['x'] }}px; 
+                                                    top: {{ $campo['y'] }}px;
+                                                    width: {{ $config['width'] ?? 100 }}px;
+                                                    height: {{ $config['height'] ?? 100 }}px;">
+                                            @if($campo['id'] === 'foto' && $empleado->Foto)
+                                                <img src="{{ asset($empleado->Foto) }}" alt="Foto">
+                                            @elseif($campo['id'] === 'firma' && $empleado->Firma)
+                                                <img src="{{ asset($empleado->Firma) }}" alt="Firma">
+                                            @endif
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+                    <p style="color: #6B7280; font-size: 14px;">Trasera</p>
+                @endif
+            </div>
+        @endforeach
     </div>
 
-    <script>
-        // Auto-abrir el diálogo de impresión al cargar la página (opcional)
-        // window.onload = function() {
-        //     setTimeout(function() {
-        //         window.print();
-        //     }, 500);
-        // }
-    </script>
+    <!-- Credenciales para impresión (cada una en su propia página) -->
+    @foreach($paquete->empleados as $empleado)
+        <!-- FRONTAL - Página individual -->
+        <!-- Empleado: {{ $empleado->Nombre }} {{ $empleado->Apellido }} - FRONTAL -->
+        <div class="credencial-page">
+            <div class="credencial-container">
+                <div class="credencial-lado" style="background-image: url('{{ asset('storage/' . $plantilla->imagen_frontal) }}');">
+                    @if($plantilla->campos_frontal)
+                        @foreach($plantilla->campos_frontal as $campo)
+                            @php
+                                $config = $campo['config'] ?? [];
+                                $valor = '';
+                                
+                                switch($campo['id']) {
+                                    case 'nombre':
+                                        $valor = $empleado->Nombre . ' ' . $empleado->Apellido;
+                                        break;
+                                    case 'puesto':
+                                        $valor = $empleado->Puesto ?? '';
+                                        break;
+                                    case 'departamento':
+                                        $valor = $empleado->Departamento ?? '';
+                                        break;
+                                    case 'rfc':
+                                        $valor = $empleado->RFC ?? '';
+                                        break;
+                                    case 'nss':
+                                        $valor = $empleado->NumeroSeguroSocial ?? '';
+                                        break;
+                                    case 'correo':
+                                        $valor = $empleado->Correo ?? '';
+                                        break;
+                                    case 'tipo_sangre':
+                                        $valor = $empleado->TipoSangre ?? '';
+                                        break;
+                                    case 'codigo_rh':
+                                        $valor = $empleado->CodigoRH ?? '';
+                                        break;
+                                    case 'sucursales':
+                                        $sucursales = collect();
+                                        if($empleado->sucursal) $sucursales->push($empleado->sucursal->Nombre);
+                                        foreach($empleado->sucursales as $suc) {
+                                            if(!$sucursales->contains($suc->Nombre)) {
+                                                $sucursales->push($suc->Nombre);
+                                            }
+                                        }
+                                        $valor = $sucursales->implode(', ');
+                                        break;
+                                }
+                            @endphp
+
+                            @if($campo['tipo'] === 'texto')
+                                <div class="campo-dato campo-texto" 
+                                     style="left: {{ $campo['x'] }}px; 
+                                            top: {{ $campo['y'] }}px;
+                                            width: {{ $config['width'] ?? 150 }}px;
+                                            min-height: {{ $config['height'] ?? 20 }}px;
+                                            font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                            color: {{ $config['color'] ?? '#000000' }};
+                                            font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                            text-align: {{ $config['align'] ?? 'left' }};">
+                                    {{ $valor }}
+                                </div>
+                            @elseif($campo['tipo'] === 'imagen')
+                                <div class="campo-dato campo-imagen" 
+                                     style="left: {{ $campo['x'] }}px; 
+                                            top: {{ $campo['y'] }}px;
+                                            width: {{ $config['width'] ?? 100 }}px;
+                                            height: {{ $config['height'] ?? 100 }}px;">
+                                    @if($campo['id'] === 'foto' && $empleado->Foto)
+                                        <img src="{{ asset($empleado->Foto) }}" alt="Foto">
+                                    @elseif($campo['id'] === 'firma' && $empleado->Firma)
+                                        <img src="{{ asset($empleado->Firma) }}" alt="Firma">
+                                    @endif
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- TRASERA - Página individual (si existe) -->
+        <!-- Empleado: {{ $empleado->Nombre }} {{ $empleado->Apellido }} - TRASERA -->
+        @if($plantilla->imagen_trasera)
+            <div class="credencial-page">
+                <div class="credencial-container">
+                    <div class="credencial-lado" style="background-image: url('{{ asset('storage/' . $plantilla->imagen_trasera) }}');">
+                        @if($plantilla->campos_trasera)
+                            @foreach($plantilla->campos_trasera as $campo)
+                                @php
+                                    $config = $campo['config'] ?? [];
+                                    $valor = '';
+                                    
+                                    switch($campo['id']) {
+                                        case 'nombre':
+                                            $valor = $empleado->Nombre . ' ' . $empleado->Apellido;
+                                            break;
+                                        case 'puesto':
+                                            $valor = $empleado->Puesto ?? '';
+                                            break;
+                                        case 'departamento':
+                                            $valor = $empleado->Departamento ?? '';
+                                            break;
+                                        case 'rfc':
+                                            $valor = $empleado->RFC ?? '';
+                                            break;
+                                        case 'nss':
+                                            $valor = $empleado->NumeroSeguroSocial ?? '';
+                                            break;
+                                        case 'correo':
+                                            $valor = $empleado->Correo ?? '';
+                                            break;
+                                        case 'tipo_sangre':
+                                            $valor = $empleado->TipoSangre ?? '';
+                                            break;
+                                        case 'codigo_rh':
+                                            $valor = $empleado->CodigoRH ?? '';
+                                            break;
+                                        case 'sucursales':
+                                            $sucursales = collect();
+                                            if($empleado->sucursal) $sucursales->push($empleado->sucursal->Nombre);
+                                            foreach($empleado->sucursales as $suc) {
+                                                if(!$sucursales->contains($suc->Nombre)) {
+                                                    $sucursales->push($suc->Nombre);
+                                                }
+                                            }
+                                            $valor = $sucursales->implode(', ');
+                                            break;
+                                    }
+                                @endphp
+
+                                @if($campo['tipo'] === 'texto')
+                                    <div class="campo-dato campo-texto" 
+                                         style="left: {{ $campo['x'] }}px; 
+                                                top: {{ $campo['y'] }}px;
+                                                width: {{ $config['width'] ?? 150 }}px;
+                                                min-height: {{ $config['height'] ?? 20 }}px;
+                                                font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                color: {{ $config['color'] ?? '#000000' }};
+                                                font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                text-align: {{ $config['align'] ?? 'left' }};">
+                                        {{ $valor }}
+                                    </div>
+                                @elseif($campo['tipo'] === 'imagen')
+                                    <div class="campo-dato campo-imagen" 
+                                         style="left: {{ $campo['x'] }}px; 
+                                                top: {{ $campo['y'] }}px;
+                                                width: {{ $config['width'] ?? 100 }}px;
+                                                height: {{ $config['height'] ?? 100 }}px;">
+                                        @if($campo['id'] === 'foto' && $empleado->Foto)
+                                            <img src="{{ asset($empleado->Foto) }}" alt="Foto">
+                                        @elseif($campo['id'] === 'firma' && $empleado->Firma)
+                                            <img src="{{ asset($empleado->Firma) }}" alt="Firma">
+                                        @endif
+                                    </div>
+                                @endif
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endforeach
 </body>
 </html>

@@ -54,6 +54,12 @@
                                 {{ __('Paquetes') }}
                             </x-nav-link>
                         @endif
+                        
+                        @auth
+                            <x-nav-link :href="route('plantillas.index')" :active="request()->routeIs('plantillas.*')">
+                                {{ __('Plantillas') }}
+                            </x-nav-link>
+                        @endauth
                     @endauth
                 </div>
             </div>

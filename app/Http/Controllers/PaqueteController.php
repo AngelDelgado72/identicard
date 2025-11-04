@@ -272,6 +272,14 @@ class PaqueteController extends Controller
                 ->with('error', 'Solo se pueden imprimir credenciales de paquetes autorizados.');
         }
         
-        return view('paquetes.credenciales', compact('paquete'));
+        // Obtener la plantilla activa
+        $plantilla = \App\Models\PlantillaCredencial::where('activa', true)->first();
+        
+        if (!$plantilla) {
+            return redirect()->route('paquetes.show', $paquete->idPaquete)
+                ->with('error', 'No hay una plantilla de credencial configurada. Por favor, configure una plantilla primero.');
+        }
+        
+        return view('paquetes.credenciales', compact('paquete', 'plantilla'));
     }
 }
