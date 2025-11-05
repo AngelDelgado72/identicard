@@ -160,7 +160,7 @@
                         @endif
 
                         <!-- Panel de propiedades del campo seleccionado -->
-                        <div id="panel-propiedades" class="mt-4 bg-gray-800 rounded-lg p-4 hidden">
+                        <div id="panel-propiedades" class="mt-4 bg-gray-800 rounded-lg p-4">
                             <h4 class="text-white font-semibold mb-3 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
@@ -168,34 +168,84 @@
                                 </svg>
                                 Propiedades del Campo
                             </h4>
-                            <div class="grid grid-cols-3 gap-4">
-                                <div>
-                                    <label class="block text-xs text-gray-400 mb-1">Tamaño Fuente (px)</label>
-                                    <input type="number" id="prop-fontsize" class="w-full bg-gray-700 text-white text-sm rounded px-2 py-1" value="14" min="8" max="72">
+                            
+                            <!-- Mensaje cuando no hay campo seleccionado -->
+                            <div id="mensaje-no-seleccion" class="text-gray-400 text-sm text-center py-8">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 mx-auto mb-3 opacity-30">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
+                                </svg>
+                                <p class="font-medium">Haz clic en un campo para editar sus propiedades</p>
+                                <p class="text-xs mt-2 text-gray-500">Arrastra un campo desde el panel izquierdo o selecciona uno existente</p>
+                            </div>
+
+                            <!-- Controles de propiedades -->
+                            <div id="propiedades-campos" class="hidden">
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Tamaño Fuente (px)</label>
+                                        <input type="number" id="prop-fontsize" class="w-full bg-gray-700 text-white text-sm rounded px-2 py-1 border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500" value="14" min="8" max="72">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Ancho (px)</label>
+                                        <input type="number" id="prop-width" class="w-full bg-gray-700 text-white text-sm rounded px-2 py-1 border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500" value="150" min="50" max="500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Alto (px)</label>
+                                        <input type="number" id="prop-height" class="w-full bg-gray-700 text-white text-sm rounded px-2 py-1 border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500" value="100" min="20" max="400">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Color</label>
+                                        <input type="color" id="prop-color" class="w-full bg-gray-700 rounded px-2 py-1 h-9 cursor-pointer border border-gray-600" value="#000000">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Color Etiqueta</label>
+                                        <input type="color" id="prop-label-color" class="w-full bg-gray-700 rounded px-2 py-1 h-9 cursor-pointer border border-gray-600" value="#666666">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Alineación</label>
+                                        <select id="prop-align" class="w-full bg-gray-700 text-white text-sm rounded px-2 py-1 border border-gray-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                                            <option value="left">Izquierda</option>
+                                            <option value="center">Centro</option>
+                                            <option value="right">Derecha</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Negrita</label>
+                                        <label class="inline-flex items-center mt-2 cursor-pointer">
+                                            <input type="checkbox" id="prop-bold" class="rounded bg-gray-700 border-gray-600 text-blue-600 focus:ring-blue-500">
+                                            <span class="ml-2 text-sm text-white">Activar</span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Mostrar Etiqueta</label>
+                                        <label class="inline-flex items-center mt-2 cursor-pointer">
+                                            <input type="checkbox" id="prop-show-label" class="rounded bg-gray-700 border-gray-600 text-blue-600 focus:ring-blue-500">
+                                            <span class="ml-2 text-sm text-white">Mostrar</span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Mayúsculas</label>
+                                        <label class="inline-flex items-center mt-2 cursor-pointer">
+                                            <input type="checkbox" id="prop-uppercase" class="rounded bg-gray-700 border-gray-600 text-blue-600 focus:ring-blue-500">
+                                            <span class="ml-2 text-sm text-white">Activar</span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-gray-400 mb-1">Formato Circular</label>
+                                        <label class="inline-flex items-center mt-2 cursor-pointer">
+                                            <input type="checkbox" id="prop-circular" class="rounded bg-gray-700 border-gray-600 text-blue-600 focus:ring-blue-500">
+                                            <span class="ml-2 text-sm text-white">Activar</span>
+                                        </label>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="block text-xs text-gray-400 mb-1">Ancho (px)</label>
-                                    <input type="number" id="prop-width" class="w-full bg-gray-700 text-white text-sm rounded px-2 py-1" value="150" min="50" max="500">
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-gray-400 mb-1">Alto (px)</label>
-                                    <input type="number" id="prop-height" class="w-full bg-gray-700 text-white text-sm rounded px-2 py-1" value="100" min="20" max="400">
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-gray-400 mb-1">Color</label>
-                                    <input type="color" id="prop-color" class="w-full bg-gray-700 text-white rounded px-2 py-1" value="#000000">
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-gray-400 mb-1">Negrita</label>
-                                    <input type="checkbox" id="prop-bold" class="mt-2">
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-gray-400 mb-1">Alineación</label>
-                                    <select id="prop-align" class="w-full bg-gray-700 text-white text-sm rounded px-2 py-1">
-                                        <option value="left">Izquierda</option>
-                                        <option value="center">Centro</option>
-                                        <option value="right">Derecha</option>
-                                    </select>
+                                
+                                <div class="mt-4 p-3 bg-gray-700 rounded border border-gray-600">
+                                    <p class="text-xs text-gray-300 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                                        </svg>
+                                        Los cambios se aplican en tiempo real. Click derecho para eliminar.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -322,23 +372,36 @@
                 width: tipo === 'imagen' ? (config.width || 100) : (config.width || 150),
                 height: tipo === 'imagen' ? (config.height || 100) : (config.height || 20),
                 color: config.color || '#000000',
+                labelColor: config.labelColor || '#666666',
                 bold: config.bold || false,
-                align: config.align || 'left'
+                align: config.align || 'left',
+                showLabel: config.showLabel || false,
+                uppercase: config.uppercase || false,
+                circular: config.circular || false
             };
 
             elemento.style.left = x + 'px';
             elemento.style.top = y + 'px';
             elemento.style.width = defaultConfig.width + 'px';
             elemento.style.height = defaultConfig.height + 'px';
+            elemento.style.textAlign = defaultConfig.align;
             
-            if (tipo === 'texto') {
-                elemento.style.fontSize = defaultConfig.fontSize + 'px';
-                elemento.style.color = defaultConfig.color;
-                elemento.style.fontWeight = defaultConfig.bold ? 'bold' : 'normal';
-                elemento.style.textAlign = defaultConfig.align;
+            // Aplicar formato circular si es imagen
+            if (tipo === 'imagen' && defaultConfig.circular) {
+                elemento.style.borderRadius = '50%';
+                elemento.style.overflow = 'hidden';
             }
 
-            elemento.innerHTML = `<div class="campo-label">${nombre}</div>`;
+            // Crear el contenido del campo
+            if (tipo === 'texto') {
+                if (defaultConfig.showLabel) {
+                    elemento.innerHTML = `<div class="campo-label" style="color: ${defaultConfig.labelColor}; font-weight: bold; font-size: ${defaultConfig.fontSize * 0.8}px;">${nombre}</div><div class="campo-valor" style="color: ${defaultConfig.color}; font-size: ${defaultConfig.fontSize}px; font-weight: ${defaultConfig.bold ? 'bold' : 'normal'}; text-transform: ${defaultConfig.uppercase ? 'uppercase' : 'none'};">Valor ejemplo</div>`;
+                } else {
+                    elemento.innerHTML = `<div class="campo-label" style="color: ${defaultConfig.color}; font-size: ${defaultConfig.fontSize}px; font-weight: ${defaultConfig.bold ? 'bold' : 'normal'}; text-transform: ${defaultConfig.uppercase ? 'uppercase' : 'none'};">${nombre}</div>`;
+                }
+            } else {
+                elemento.innerHTML = `<div class="campo-label">${nombre}</div>`;
+            }
 
             // Guardar configuración en el elemento
             elemento.dataset.config = JSON.stringify(defaultConfig);
@@ -366,10 +429,12 @@
         }
 
         function seleccionarCampo(elemento) {
-            if (selectedElement) {
-                selectedElement.classList.remove('selected');
-            }
+            // Remover la clase 'selected' de TODOS los campos en AMBOS canvas
+            document.querySelectorAll('.campo-colocado').forEach(campo => {
+                campo.classList.remove('selected');
+            });
             
+            // Marcar solo el elemento actual como seleccionado
             selectedElement = elemento;
             elemento.classList.add('selected');
 
@@ -379,14 +444,22 @@
             document.getElementById('prop-width').value = parseInt(elemento.style.width) || 150;
             document.getElementById('prop-height').value = parseInt(elemento.style.height) || 20;
             document.getElementById('prop-color').value = config.color || '#000000';
+            document.getElementById('prop-label-color').value = config.labelColor || '#666666';
             document.getElementById('prop-bold').checked = config.bold || false;
             document.getElementById('prop-align').value = config.align || 'left';
+            document.getElementById('prop-show-label').checked = config.showLabel || false;
+            document.getElementById('prop-uppercase').checked = config.uppercase || false;
+            document.getElementById('prop-circular').checked = config.circular || false;
 
-            document.getElementById('panel-propiedades').classList.remove('hidden');
+            // Mostrar controles de propiedades y ocultar mensaje
+            document.getElementById('mensaje-no-seleccion').classList.add('hidden');
+            document.getElementById('propiedades-campos').classList.remove('hidden');
 
-            // Actualizar al cambiar propiedades
-            ['prop-fontsize', 'prop-width', 'prop-height', 'prop-color', 'prop-bold', 'prop-align'].forEach(id => {
-                document.getElementById(id).addEventListener('input', actualizarPropiedades);
+            // Actualizar al cambiar propiedades (remover listeners anteriores para evitar duplicados)
+            ['prop-fontsize', 'prop-width', 'prop-height', 'prop-color', 'prop-label-color', 'prop-bold', 'prop-align', 'prop-show-label', 'prop-uppercase', 'prop-circular'].forEach(id => {
+                const elem = document.getElementById(id);
+                elem.removeEventListener('input', actualizarPropiedades);
+                elem.addEventListener('input', actualizarPropiedades);
             });
         }
 
@@ -398,18 +471,40 @@
                 width: parseInt(document.getElementById('prop-width').value),
                 height: parseInt(document.getElementById('prop-height').value),
                 color: document.getElementById('prop-color').value,
+                labelColor: document.getElementById('prop-label-color').value,
                 bold: document.getElementById('prop-bold').checked,
-                align: document.getElementById('prop-align').value
+                align: document.getElementById('prop-align').value,
+                showLabel: document.getElementById('prop-show-label').checked,
+                uppercase: document.getElementById('prop-uppercase').checked,
+                circular: document.getElementById('prop-circular').checked
             };
 
             selectedElement.style.width = config.width + 'px';
             selectedElement.style.height = config.height + 'px';
+            selectedElement.style.textAlign = config.align;
+            
+            // Aplicar o remover formato circular para imágenes
+            if (selectedElement.dataset.tipo === 'imagen') {
+                if (config.circular) {
+                    selectedElement.style.borderRadius = '50%';
+                    selectedElement.style.overflow = 'hidden';
+                } else {
+                    selectedElement.style.borderRadius = '0';
+                    selectedElement.style.overflow = 'visible';
+                }
+            }
             
             if (selectedElement.dataset.tipo === 'texto') {
-                selectedElement.style.fontSize = config.fontSize + 'px';
-                selectedElement.style.color = config.color;
-                selectedElement.style.fontWeight = config.bold ? 'bold' : 'normal';
-                selectedElement.style.textAlign = config.align;
+                // Obtener el nombre del campo antes de modificar el HTML
+                const nombre = selectedElement.querySelector('.campo-label')?.textContent.split('\n')[0] || 
+                              selectedElement.dataset.campoId;
+                
+                // Actualizar el contenido para mostrar u ocultar la etiqueta
+                if (config.showLabel) {
+                    selectedElement.innerHTML = `<div class="campo-label" style="color: ${config.labelColor}; font-weight: bold; font-size: ${config.fontSize * 0.8}px;">${nombre}</div><div class="campo-valor" style="color: ${config.color}; font-size: ${config.fontSize}px; font-weight: ${config.bold ? 'bold' : 'normal'}; text-transform: ${config.uppercase ? 'uppercase' : 'none'};">Valor ejemplo</div>`;
+                } else {
+                    selectedElement.innerHTML = `<div class="campo-label" style="color: ${config.color}; font-size: ${config.fontSize}px; font-weight: ${config.bold ? 'bold' : 'normal'}; text-transform: ${config.uppercase ? 'uppercase' : 'none'};">${nombre}</div>`;
+                }
             }
 
             selectedElement.dataset.config = JSON.stringify(config);
@@ -492,10 +587,12 @@
 
         // Deseleccionar al hacer click fuera
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('.campo-colocado') && selectedElement) {
+            if (!e.target.closest('.campo-colocado') && !e.target.closest('#panel-propiedades') && selectedElement) {
                 selectedElement.classList.remove('selected');
                 selectedElement = null;
-                document.getElementById('panel-propiedades').classList.add('hidden');
+                // Ocultar propiedades y mostrar mensaje de ayuda
+                document.getElementById('propiedades-campos').classList.add('hidden');
+                document.getElementById('mensaje-no-seleccion').classList.remove('hidden');
             }
         });
 

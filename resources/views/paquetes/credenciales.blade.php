@@ -220,6 +220,8 @@
                             @foreach($plantilla->campos_frontal as $campo)
                                 @php
                                     $config = $campo['config'] ?? [];
+                                    $showLabel = $config['showLabel'] ?? false;
+                                    $uppercase = $config['uppercase'] ?? false;
                                     $valor = '';
                                     
                                     switch($campo['id']) {
@@ -258,26 +260,56 @@
                                             $valor = $sucursales->implode(', ');
                                             break;
                                     }
+                                    
+                                    // Aplicar mayúsculas si está configurado
+                                    if ($uppercase && $valor) {
+                                        $valor = strtoupper($valor);
+                                    }
+                                    
+                                    // Preparar texto con etiqueta si está configurado
+                                    $textoFinal = $valor;
+                                    if ($showLabel && $campo['tipo'] === 'texto') {
+                                        $etiqueta = $campo['nombre'];
+                                        $textoFinal = $etiqueta . "\n" . $valor;
+                                    }
                                 @endphp
 
                                 @if($campo['tipo'] === 'texto')
-                                    <div class="campo-dato campo-texto" 
-                                         style="left: {{ $campo['x'] }}px; 
-                                                top: {{ $campo['y'] }}px;
-                                                width: {{ $config['width'] ?? 150 }}px;
-                                                min-height: {{ $config['height'] ?? 20 }}px;
-                                                font-size: {{ $config['fontSize'] ?? 14 }}px;
-                                                color: {{ $config['color'] ?? '#000000' }};
-                                                font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
-                                                text-align: {{ $config['align'] ?? 'left' }};">
-                                        {{ $valor }}
-                                    </div>
+                                    @if($showLabel)
+                                        <div class="campo-dato campo-texto" 
+                                             style="left: {{ $campo['x'] }}px; 
+                                                    top: {{ $campo['y'] }}px;
+                                                    width: {{ $config['width'] ?? 150 }}px;
+                                                    min-height: {{ $config['height'] ?? 20 }}px;
+                                                    font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                    font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                    text-align: {{ $config['align'] ?? 'left' }};">
+                                            <div style="color: {{ $config['labelColor'] ?? '#666666' }}; font-weight: bold; font-size: {{ ($config['fontSize'] ?? 14) * 0.8 }}px;">{{ $campo['nombre'] }}</div>
+                                            <div style="color: {{ $config['color'] ?? '#000000' }};">{{ $valor }}</div>
+                                        </div>
+                                    @else
+                                        <div class="campo-dato campo-texto" 
+                                             style="left: {{ $campo['x'] }}px; 
+                                                    top: {{ $campo['y'] }}px;
+                                                    width: {{ $config['width'] ?? 150 }}px;
+                                                    min-height: {{ $config['height'] ?? 20 }}px;
+                                                    font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                    color: {{ $config['color'] ?? '#000000' }};
+                                                    font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                    text-align: {{ $config['align'] ?? 'left' }};">
+                                            {{ $valor }}
+                                        </div>
+                                    @endif
                                 @elseif($campo['tipo'] === 'imagen')
+                                    @php
+                                        $circular = $config['circular'] ?? false;
+                                    @endphp
                                     <div class="campo-dato campo-imagen" 
                                          style="left: {{ $campo['x'] }}px; 
                                                 top: {{ $campo['y'] }}px;
                                                 width: {{ $config['width'] ?? 100 }}px;
-                                                height: {{ $config['height'] ?? 100 }}px;">
+                                                height: {{ $config['height'] ?? 100 }}px;
+                                                {{ $circular ? 'border-radius: 50%; overflow: hidden;' : '' }}">
                                         @if($campo['id'] === 'foto' && $empleado->Foto)
                                             <img src="{{ asset($empleado->Foto) }}" alt="Foto">
                                         @elseif($campo['id'] === 'firma' && $empleado->Firma)
@@ -299,6 +331,8 @@
                                 @foreach($plantilla->campos_trasera as $campo)
                                     @php
                                         $config = $campo['config'] ?? [];
+                                        $showLabel = $config['showLabel'] ?? false;
+                                        $uppercase = $config['uppercase'] ?? false;
                                         $valor = '';
                                         
                                         switch($campo['id']) {
@@ -337,26 +371,56 @@
                                                 $valor = $sucursales->implode(', ');
                                                 break;
                                         }
+                                        
+                                        // Aplicar mayúsculas si está configurado
+                                        if ($uppercase && $valor) {
+                                            $valor = strtoupper($valor);
+                                        }
+                                        
+                                        // Preparar texto con etiqueta si está configurado
+                                        $textoFinal = $valor;
+                                        if ($showLabel && $campo['tipo'] === 'texto') {
+                                            $etiqueta = $campo['nombre'];
+                                            $textoFinal = $etiqueta . "\n" . $valor;
+                                        }
                                     @endphp
 
                                     @if($campo['tipo'] === 'texto')
-                                        <div class="campo-dato campo-texto" 
-                                             style="left: {{ $campo['x'] }}px; 
-                                                    top: {{ $campo['y'] }}px;
-                                                    width: {{ $config['width'] ?? 150 }}px;
-                                                    min-height: {{ $config['height'] ?? 20 }}px;
-                                                    font-size: {{ $config['fontSize'] ?? 14 }}px;
-                                                    color: {{ $config['color'] ?? '#000000' }};
-                                                    font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
-                                                    text-align: {{ $config['align'] ?? 'left' }};">
-                                            {{ $valor }}
-                                        </div>
+                                        @if($showLabel)
+                                            <div class="campo-dato campo-texto" 
+                                                 style="left: {{ $campo['x'] }}px; 
+                                                        top: {{ $campo['y'] }}px;
+                                                        width: {{ $config['width'] ?? 150 }}px;
+                                                        min-height: {{ $config['height'] ?? 20 }}px;
+                                                        font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                        font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                        text-align: {{ $config['align'] ?? 'left' }};">
+                                                <div style="color: {{ $config['labelColor'] ?? '#666666' }}; font-weight: bold; font-size: {{ ($config['fontSize'] ?? 14) * 0.8 }}px;">{{ $campo['nombre'] }}</div>
+                                                <div style="color: {{ $config['color'] ?? '#000000' }};">{{ $valor }}</div>
+                                            </div>
+                                        @else
+                                            <div class="campo-dato campo-texto" 
+                                                 style="left: {{ $campo['x'] }}px; 
+                                                        top: {{ $campo['y'] }}px;
+                                                        width: {{ $config['width'] ?? 150 }}px;
+                                                        min-height: {{ $config['height'] ?? 20 }}px;
+                                                        font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                        color: {{ $config['color'] ?? '#000000' }};
+                                                        font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                        text-align: {{ $config['align'] ?? 'left' }};">
+                                                {{ $valor }}
+                                            </div>
+                                        @endif
                                     @elseif($campo['tipo'] === 'imagen')
+                                        @php
+                                            $circular = $config['circular'] ?? false;
+                                        @endphp
                                         <div class="campo-dato campo-imagen" 
                                              style="left: {{ $campo['x'] }}px; 
                                                     top: {{ $campo['y'] }}px;
                                                     width: {{ $config['width'] ?? 100 }}px;
-                                                    height: {{ $config['height'] ?? 100 }}px;">
+                                                    height: {{ $config['height'] ?? 100 }}px;
+                                                    {{ $circular ? 'border-radius: 50%; overflow: hidden;' : '' }}">
                                             @if($campo['id'] === 'foto' && $empleado->Foto)
                                                 <img src="{{ asset($empleado->Foto) }}" alt="Foto">
                                             @elseif($campo['id'] === 'firma' && $empleado->Firma)
@@ -385,6 +449,8 @@
                         @foreach($plantilla->campos_frontal as $campo)
                             @php
                                 $config = $campo['config'] ?? [];
+                                $showLabel = $config['showLabel'] ?? false;
+                                $uppercase = $config['uppercase'] ?? false;
                                 $valor = '';
                                 
                                 switch($campo['id']) {
@@ -423,26 +489,56 @@
                                         $valor = $sucursales->implode(', ');
                                         break;
                                 }
+                                
+                                // Aplicar mayúsculas si está configurado
+                                if ($uppercase && $valor) {
+                                    $valor = strtoupper($valor);
+                                }
+                                
+                                // Preparar texto con etiqueta si está configurado
+                                $textoFinal = $valor;
+                                if ($showLabel && $campo['tipo'] === 'texto') {
+                                    $etiqueta = $campo['nombre'];
+                                    $textoFinal = $etiqueta . "\n" . $valor;
+                                }
                             @endphp
 
                             @if($campo['tipo'] === 'texto')
-                                <div class="campo-dato campo-texto" 
-                                     style="left: {{ $campo['x'] }}px; 
-                                            top: {{ $campo['y'] }}px;
-                                            width: {{ $config['width'] ?? 150 }}px;
-                                            min-height: {{ $config['height'] ?? 20 }}px;
-                                            font-size: {{ $config['fontSize'] ?? 14 }}px;
-                                            color: {{ $config['color'] ?? '#000000' }};
-                                            font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
-                                            text-align: {{ $config['align'] ?? 'left' }};">
-                                    {{ $valor }}
-                                </div>
+                                @if($showLabel)
+                                    <div class="campo-dato campo-texto" 
+                                         style="left: {{ $campo['x'] }}px; 
+                                                top: {{ $campo['y'] }}px;
+                                                width: {{ $config['width'] ?? 150 }}px;
+                                                min-height: {{ $config['height'] ?? 20 }}px;
+                                                font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                text-align: {{ $config['align'] ?? 'left' }};">
+                                        <div style="color: {{ $config['labelColor'] ?? '#666666' }}; font-weight: bold; font-size: {{ ($config['fontSize'] ?? 14) * 0.8 }}px;">{{ $campo['nombre'] }}</div>
+                                        <div style="color: {{ $config['color'] ?? '#000000' }};">{{ $valor }}</div>
+                                    </div>
+                                @else
+                                    <div class="campo-dato campo-texto" 
+                                         style="left: {{ $campo['x'] }}px; 
+                                                top: {{ $campo['y'] }}px;
+                                                width: {{ $config['width'] ?? 150 }}px;
+                                                min-height: {{ $config['height'] ?? 20 }}px;
+                                                font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                color: {{ $config['color'] ?? '#000000' }};
+                                                font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                text-align: {{ $config['align'] ?? 'left' }};">
+                                        {{ $valor }}
+                                    </div>
+                                @endif
                             @elseif($campo['tipo'] === 'imagen')
+                                @php
+                                    $circular = $config['circular'] ?? false;
+                                @endphp
                                 <div class="campo-dato campo-imagen" 
                                      style="left: {{ $campo['x'] }}px; 
                                             top: {{ $campo['y'] }}px;
                                             width: {{ $config['width'] ?? 100 }}px;
-                                            height: {{ $config['height'] ?? 100 }}px;">
+                                            height: {{ $config['height'] ?? 100 }}px;
+                                            {{ $circular ? 'border-radius: 50%; overflow: hidden;' : '' }}">
                                     @if($campo['id'] === 'foto' && $empleado->Foto)
                                         <img src="{{ asset($empleado->Foto) }}" alt="Foto">
                                     @elseif($campo['id'] === 'firma' && $empleado->Firma)
@@ -466,6 +562,8 @@
                             @foreach($plantilla->campos_trasera as $campo)
                                 @php
                                     $config = $campo['config'] ?? [];
+                                    $showLabel = $config['showLabel'] ?? false;
+                                    $uppercase = $config['uppercase'] ?? false;
                                     $valor = '';
                                     
                                     switch($campo['id']) {
@@ -504,26 +602,56 @@
                                             $valor = $sucursales->implode(', ');
                                             break;
                                     }
+                                    
+                                    // Aplicar mayúsculas si está configurado
+                                    if ($uppercase && $valor) {
+                                        $valor = strtoupper($valor);
+                                    }
+                                    
+                                    // Preparar texto con etiqueta si está configurado
+                                    $textoFinal = $valor;
+                                    if ($showLabel && $campo['tipo'] === 'texto') {
+                                        $etiqueta = $campo['nombre'];
+                                        $textoFinal = $etiqueta . "\n" . $valor;
+                                    }
                                 @endphp
 
                                 @if($campo['tipo'] === 'texto')
-                                    <div class="campo-dato campo-texto" 
-                                         style="left: {{ $campo['x'] }}px; 
-                                                top: {{ $campo['y'] }}px;
-                                                width: {{ $config['width'] ?? 150 }}px;
-                                                min-height: {{ $config['height'] ?? 20 }}px;
-                                                font-size: {{ $config['fontSize'] ?? 14 }}px;
-                                                color: {{ $config['color'] ?? '#000000' }};
-                                                font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
-                                                text-align: {{ $config['align'] ?? 'left' }};">
-                                        {{ $valor }}
-                                    </div>
+                                    @if($showLabel)
+                                        <div class="campo-dato campo-texto" 
+                                             style="left: {{ $campo['x'] }}px; 
+                                                    top: {{ $campo['y'] }}px;
+                                                    width: {{ $config['width'] ?? 150 }}px;
+                                                    min-height: {{ $config['height'] ?? 20 }}px;
+                                                    font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                    font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                    text-align: {{ $config['align'] ?? 'left' }};">
+                                            <div style="color: {{ $config['labelColor'] ?? '#666666' }}; font-weight: bold; font-size: {{ ($config['fontSize'] ?? 14) * 0.8 }}px;">{{ $campo['nombre'] }}</div>
+                                            <div style="color: {{ $config['color'] ?? '#000000' }};">{{ $valor }}</div>
+                                        </div>
+                                    @else
+                                        <div class="campo-dato campo-texto" 
+                                             style="left: {{ $campo['x'] }}px; 
+                                                    top: {{ $campo['y'] }}px;
+                                                    width: {{ $config['width'] ?? 150 }}px;
+                                                    min-height: {{ $config['height'] ?? 20 }}px;
+                                                    font-size: {{ $config['fontSize'] ?? 14 }}px;
+                                                    color: {{ $config['color'] ?? '#000000' }};
+                                                    font-weight: {{ ($config['bold'] ?? false) ? 'bold' : 'normal' }};
+                                                    text-align: {{ $config['align'] ?? 'left' }};">
+                                            {{ $valor }}
+                                        </div>
+                                    @endif
                                 @elseif($campo['tipo'] === 'imagen')
+                                    @php
+                                        $circular = $config['circular'] ?? false;
+                                    @endphp
                                     <div class="campo-dato campo-imagen" 
                                          style="left: {{ $campo['x'] }}px; 
                                                 top: {{ $campo['y'] }}px;
                                                 width: {{ $config['width'] ?? 100 }}px;
-                                                height: {{ $config['height'] ?? 100 }}px;">
+                                                height: {{ $config['height'] ?? 100 }}px;
+                                                {{ $circular ? 'border-radius: 50%; overflow: hidden;' : '' }}">
                                         @if($campo['id'] === 'foto' && $empleado->Foto)
                                             <img src="{{ asset($empleado->Foto) }}" alt="Foto">
                                         @elseif($campo['id'] === 'firma' && $empleado->Firma)
