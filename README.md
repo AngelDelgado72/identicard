@@ -283,7 +283,6 @@ php artisan storage:link
 
 ##  Seguridad
 
-- **NUNCA** subas el archivo `.env` a Git (ya está en `.gitignore`)
 - Cambia la contraseña del administrador después del primer login
 - Configura APP_DEBUG=false en producción
 - Usa HTTPS en producción
