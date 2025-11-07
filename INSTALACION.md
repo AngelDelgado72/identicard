@@ -1,26 +1,91 @@
 #  Guía de Instalación - Identicard
 
-## Requisitos Previos
-- PHP 8.2 o superior
-- Composer
-- Node.js y npm
-- Servidor web (Apache/Nginx) o usar servidor integrado de PHP
-- Base de datos SQLite (incluida) o MySQL
+## 📥 Descargar e Instalar Requisitos Previos
+
+Antes de comenzar, asegúrate de tener instalados los siguientes programas:
+
+### 1. PHP 8.2 o superior
+**Windows:**
+- Descarga desde: [https://windows.php.net/download/](https://windows.php.net/download/)
+- Recomendado: **VS16 x64 Thread Safe** (versión 8.2 o superior)
+- Instrucciones: [https://www.php.net/manual/es/install.windows.php](https://www.php.net/manual/es/install.windows.php)
+
+**Linux (Ubuntu/Debian):**
+```bash
+sudo apt update
+sudo apt install php8.2 php8.2-cli php8.2-common php8.2-curl php8.2-mbstring php8.2-xml php8.2-zip php8.2-sqlite3 php8.2-gd
+```
+
+**macOS (con Homebrew):**
+```bash
+brew install php@8.2
+```
+
+### 2. Composer (Gestor de Dependencias PHP)
+- Descarga desde: [https://getcomposer.org/download/](https://getcomposer.org/download/)
+- **Windows:** Descarga el instalador `.exe` y sigue el asistente
+- **Linux/macOS:** Sigue las instrucciones en la página oficial
+
+### 3. Node.js y npm (Gestor de Paquetes JavaScript)
+- Descarga desde: [https://nodejs.org/](https://nodejs.org/)
+- Recomendado: **LTS (Long Term Support)** - versión estable
+- **Windows/macOS:** Descarga el instalador y ejecútalo
+- **Linux:** Usa el gestor de paquetes de tu distribución
+
+**Verificar instalación:**
+```bash
+php -v          # Debe mostrar versión >= 8.2
+composer -V     # Debe mostrar versión de Composer
+node -v         # Debe mostrar versión de Node.js
+npm -v          # Debe mostrar versión de npm
+```
 
 ---
 
-##  Pasos para Clonar y Ejecutar en Otra PC
+##  Pasos para Instalar la Aplicación
 
-### 1. Clonar el Repositorio
-```bash
-git clone https://github.com/AngelDelgado72/identicard.git
-cd identicard
-```
+### Opción 1: Descargar como ZIP (Recomendado para principiantes)
+
+1. **Descarga el proyecto desde GitHub:**
+   - Ve a: [https://github.com/AngelDelgado72/identicard](https://github.com/AngelDelgado72/identicard)
+   - Haz clic en el botón verde **"<> Code"**
+   - Selecciona **"Download ZIP"**
+   - Guarda el archivo en tu computadora
+
+2. **Extrae el archivo ZIP:**
+   ```bash
+   # Windows: Haz clic derecho > Extraer todo
+   # O usa PowerShell en la carpeta donde descargaste:
+   Expand-Archive -Path identicard-main.zip -DestinationPath C:\xampp\htdocs\
+   
+   # Renombra la carpeta (opcional):
+   Rename-Item identicard-main identicard
+   
+   # Navega a la carpeta:
+   cd C:\xampp\htdocs\identicard
+   ```
+
+3. **Continúa con el paso 2 (Instalar Dependencias)**
+
+### Opción 2: Clonar con Git (Para desarrolladores)
+
+1. **Instalar Git (si no lo tienes):**
+   - Descarga desde: [https://git-scm.com/downloads](https://git-scm.com/downloads)
+
+2. **Clonar el Repositorio:**
+   ```bash
+   git clone https://github.com/AngelDelgado72/identicard.git
+   cd identicard
+   ```
+
+---
 
 ### 2. Instalar Dependencias de PHP
 ```bash
 composer install
 ```
+
+**Nota:** Este proceso puede tardar varios minutos la primera vez.
 
 ### 3. Instalar Dependencias de JavaScript
 ```bash
@@ -198,6 +263,22 @@ Ejecuta PowerShell como Administrador y luego:
 php artisan storage:link
 ```
 
+### Error: "composer: command not found"
+- Reinicia la terminal después de instalar Composer
+- Verifica que Composer esté en el PATH del sistema
+- En Windows, cierra y abre PowerShell nuevamente
+
+### Error: "npm: command not found"
+- Reinicia la terminal después de instalar Node.js
+- Verifica la instalación con: `node -v` y `npm -v`
+
+### Error: "PHP is not recognized as an internal or external command"
+- Agrega PHP al PATH de Windows:
+  1. Busca "Variables de entorno" en Windows
+  2. Edita la variable PATH
+  3. Agrega la ruta donde instalaste PHP (ej: `C:\php`)
+  4. Reinicia la terminal
+
 ---
 
 ##  Seguridad
@@ -209,25 +290,72 @@ php artisan storage:link
 
 ---
 
-##  Soporte
+##  Enlaces Útiles y Recursos
 
-Si encuentras algún problema durante la instalación, verifica:
-1. Versión de PHP: `php -v` (debe ser >= 8.2)
-2. Versión de Composer: `composer --version`
-3. Versión de Node: `node -v`
-4. Extensiones de PHP requeridas:
-   - PDO
-   - SQLite o MySQL
-   - OpenSSL
-   - Mbstring
-   - Tokenizer
-   - XML
-   - Ctype
-   - JSON
-   - BCMath
-   - Fileinfo
-   - GD (para procesamiento de imágenes)
+### Descargas Oficiales
+- **PHP:** [https://www.php.net/downloads](https://www.php.net/downloads)
+  - Windows: [https://windows.php.net/download/](https://windows.php.net/download/)
+- **Composer:** [https://getcomposer.org/download/](https://getcomposer.org/download/)
+- **Node.js:** [https://nodejs.org/](https://nodejs.org/)
+- **Git:** [https://git-scm.com/downloads](https://git-scm.com/downloads)
+
+### Documentación
+- **Laravel:** [https://laravel.com/docs](https://laravel.com/docs)
+- **Tailwind CSS:** [https://tailwindcss.com/docs](https://tailwindcss.com/docs)
+- **PHP:** [https://www.php.net/manual/es/](https://www.php.net/manual/es/)
+
+### Herramientas Recomendadas
+- **XAMPP (PHP + MySQL todo en uno):** [https://www.apachefriends.org/](https://www.apachefriends.org/)
+- **Laragon (Alternativa a XAMPP):** [https://laragon.org/](https://laragon.org/)
+- **Visual Studio Code:** [https://code.visualstudio.com/](https://code.visualstudio.com/)
+- **PhpStorm:** [https://www.jetbrains.com/phpstorm/](https://www.jetbrains.com/phpstorm/)
+
+### Extensiones PHP Requeridas
+Si tienes problemas con extensiones faltantes, asegúrate de tener:
+- PDO (php_pdo.dll)
+- SQLite (php_pdo_sqlite.dll) o MySQL (php_pdo_mysql.dll)
+- OpenSSL (php_openssl.dll)
+- Mbstring (php_mbstring.dll)
+- Tokenizer
+- XML (php_xml.dll)
+- Ctype
+- JSON
+- BCMath (php_bcmath.dll)
+- Fileinfo (php_fileinfo.dll)
+- GD (php_gd.dll) - para procesamiento de imágenes
+
+**Habilitar extensiones en Windows:**
+1. Abre el archivo `php.ini`
+2. Busca las líneas con `;extension=nombre_extension`
+3. Elimina el `;` al inicio para activarlas
+4. Reinicia el servidor
 
 ---
 
-**¡Listo para usar! **
+##  Soporte y Contacto
+
+Si encuentras algún problema durante la instalación:
+
+1. **Verifica las versiones:**
+   ```bash
+   php -v          # Debe ser >= 8.2
+   composer -V     # Cualquier versión reciente
+   node -v         # Debe ser >= 16.x
+   npm -v
+   ```
+
+2. **Revisa los logs de errores:**
+   - Laravel: `storage/logs/laravel.log`
+   - Servidor PHP: Error en la terminal donde ejecutas `php artisan serve`
+
+3. **Comandos de depuración útiles:**
+   ```bash
+   # Ver información de PHP
+   php -i
+   
+   # Ver extensiones cargadas
+   php -m
+   
+   # Verificar configuración de Laravel
+   php artisan about
+   ```
