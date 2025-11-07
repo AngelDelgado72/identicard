@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->string('Nombre', 100);
             $table->string('Apellido', 100);
             $table->string('Correo', 120)->unique()->nullable();
+            $table->string('Telefono', 20)->nullable();
             $table->string('TipoSangre', 5)->nullable();
             $table->string('NumeroSeguroSocial', 20)->unique()->nullable();
             $table->string('CodigoRH', 10)->nullable();

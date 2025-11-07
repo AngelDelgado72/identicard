@@ -264,6 +264,10 @@ class PaqueteController extends Controller
      */
     public function imprimirCredenciales($id)
     {
+        if (!auth()->user()->hasPermission('credenciales', 'imprimir')) {
+            abort(403, 'No tienes permiso para imprimir credenciales.');
+        }
+
         $paquete = Paquete::with(['empleados.sucursales', 'empleados.sucursal'])->findOrFail($id);
         
         // Verificar que el paquete esté autorizado

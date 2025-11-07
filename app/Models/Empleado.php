@@ -16,6 +16,7 @@ class Empleado extends Model
         'Nombre',
         'Apellido',
         'Correo',
+        'Telefono',
         'TipoSangre',
         'NumeroSeguroSocial',
         'CodigoRH',

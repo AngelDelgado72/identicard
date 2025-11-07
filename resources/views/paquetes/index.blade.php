@@ -279,7 +279,7 @@
                                         @endif
                                     @endif
                                     
-                                    @if($paquete->estatus === 'autorizado' && auth()->user()->hasPermission('paquetes', 'ver'))
+                                    @if($paquete->estatus === 'autorizado' && auth()->user()->hasPermission('credenciales', 'imprimir'))
                                         <!-- Botón Imprimir Credenciales -->
                                         <a href="{{ route('paquetes.credenciales', $paquete->idPaquete) }}" 
                                            target="_blank"

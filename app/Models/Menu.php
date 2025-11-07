@@ -90,7 +90,7 @@ class Menu extends Model
             $sucursalOrder = 1;
             foreach ($empresa->sucursales as $sucursal) {
                 // Crear menú sucursal
-                $sucursalMenu = self::create([
+                self::create([
                     'name' => $sucursal->Nombre,
                     'url' => '#',
                     'slug' => 'sucursal-' . $sucursal->idSucursal,
@@ -101,20 +101,7 @@ class Menu extends Model
                     'data_id' => $sucursal->idSucursal
                 ]);
                 
-                $empleadoOrder = 1;
-                foreach ($sucursal->empleados as $empleado) {
-                    // Crear menú empleado
-                    self::create([
-                        'name' => trim($empleado->Nombre . ' ' . ($empleado->Apellido ?? '')),
-                        'url' => '#',
-                        'slug' => 'empleado-' . $empleado->idEmpleado,
-                        'parent' => $sucursalMenu->id,
-                        'order' => $empleadoOrder++,
-                        'enabled' => true,
-                        'type' => 'organizational',
-                        'data_id' => $empleado->idEmpleado
-                    ]);
-                }
+                // No mostrar empleados en el menú - solo Empresas → Sucursales
             }
         }
         

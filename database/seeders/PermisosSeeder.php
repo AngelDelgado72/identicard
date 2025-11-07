@@ -49,6 +49,16 @@ class PermisosSeeder extends Seeder
             ['nombre' => 'Eliminar Paquetes', 'descripcion' => 'Eliminar paquetes de impresión', 'modulo' => 'paquetes', 'accion' => 'eliminar'],
             ['nombre' => 'Confirmar Paquetes', 'descripcion' => 'Confirmar paquetes de impresión', 'modulo' => 'paquetes', 'accion' => 'confirmar'],
             ['nombre' => 'Autorizar Paquetes', 'descripcion' => 'Autorizar paquetes de impresión', 'modulo' => 'paquetes', 'accion' => 'autorizar'],
+
+            // Plantillas de Credenciales
+            ['nombre' => 'Ver Plantillas', 'descripcion' => 'Visualizar listado de plantillas de credenciales', 'modulo' => 'plantillas', 'accion' => 'ver'],
+            ['nombre' => 'Crear Plantillas', 'descripcion' => 'Crear nuevas plantillas de credenciales', 'modulo' => 'plantillas', 'accion' => 'crear'],
+            ['nombre' => 'Editar Plantillas', 'descripcion' => 'Modificar plantillas de credenciales', 'modulo' => 'plantillas', 'accion' => 'editar'],
+            ['nombre' => 'Eliminar Plantillas', 'descripcion' => 'Eliminar plantillas de credenciales', 'modulo' => 'plantillas', 'accion' => 'eliminar'],
+            ['nombre' => 'Activar Plantillas', 'descripcion' => 'Activar/desactivar plantillas de credenciales', 'modulo' => 'plantillas', 'accion' => 'activar'],
+
+            // Impresión de Credenciales
+            ['nombre' => 'Imprimir Credenciales', 'descripcion' => 'Imprimir credenciales de empleados', 'modulo' => 'credenciales', 'accion' => 'imprimir'],
         ];
 
         foreach ($permisos as $permiso) {

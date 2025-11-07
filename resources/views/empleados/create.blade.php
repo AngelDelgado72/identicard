@@ -32,6 +32,10 @@
                     <input type="email" name="Correo" id="Correo" value="{{ old('Correo') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
                 </div>
                 <div>
+                    <label for="Telefono" class="block text-sm font-medium text-white">Teléfono</label>
+                    <input type="text" name="Telefono" id="Telefono" value="{{ old('Telefono') }}" maxlength="20" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
+                </div>
+                <div>
                     <label for="TipoSangre" class="block text-sm font-medium text-white">Tipo de Sangre</label>
                     <input type="text" name="TipoSangre" id="TipoSangre" value="{{ old('TipoSangre') }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm bg-gray-800 text-white">
                 </div>

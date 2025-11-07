@@ -19,7 +19,7 @@
                             Volver al Listado
                         </a>
                     @endif
-                    @if($paquete->estatus === 'autorizado' && auth()->user()->hasPermission('paquetes', 'ver'))
+                    @if($paquete->estatus === 'autorizado' && auth()->user()->hasPermission('credenciales', 'imprimir'))
                         <a href="{{ route('paquetes.credenciales', $paquete->idPaquete) }}" 
                            target="_blank"
                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 inline-flex items-center">
@@ -140,7 +140,7 @@
                             </div>
                         @endif
                     </div>
-                @elseif($paquete->estatus === 'autorizado')
+                @elseif($paquete->estatus === 'autorizado' && auth()->user()->hasPermission('credenciales', 'imprimir'))
                     <div class="mt-6 pt-4 border-t border-gray-600">
                         <a href="{{ route('paquetes.credenciales', $paquete->idPaquete) }}" 
                            target="_blank"

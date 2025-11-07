@@ -243,6 +243,9 @@
                                         case 'correo':
                                             $valor = $empleado->Correo ?? '';
                                             break;
+                                        case 'telefono':
+                                            $valor = $empleado->Telefono ?? '';
+                                            break;
                                         case 'tipo_sangre':
                                             $valor = $empleado->TipoSangre ?? '';
                                             break;
@@ -353,6 +356,9 @@
                                                 break;
                                             case 'correo':
                                                 $valor = $empleado->Correo ?? '';
+                                                break;
+                                            case 'telefono':
+                                                $valor = $empleado->Telefono ?? '';
                                                 break;
                                             case 'tipo_sangre':
                                                 $valor = $empleado->TipoSangre ?? '';
@@ -472,6 +478,9 @@
                                     case 'correo':
                                         $valor = $empleado->Correo ?? '';
                                         break;
+                                    case 'telefono':
+                                        $valor = $empleado->Telefono ?? '';
+                                        break;
                                     case 'tipo_sangre':
                                         $valor = $empleado->TipoSangre ?? '';
                                         break;
@@ -584,6 +593,9 @@
                                             break;
                                         case 'correo':
                                             $valor = $empleado->Correo ?? '';
+                                            break;
+                                        case 'telefono':
+                                            $valor = $empleado->Telefono ?? '';
                                             break;
                                         case 'tipo_sangre':
                                             $valor = $empleado->TipoSangre ?? '';

@@ -23,6 +23,10 @@
                 <input type="email" name="Correo" value="{{ old('Correo', $empleado->Correo) }}" class="w-full px-3 py-2 rounded bg-gray-700 text-white" maxlength="120">
             </div>
             <div class="mb-4">
+                <label class="block text-white">Teléfono</label>
+                <input type="text" name="Telefono" value="{{ old('Telefono', $empleado->Telefono) }}" class="w-full px-3 py-2 rounded bg-gray-700 text-white" maxlength="20">
+            </div>
+            <div class="mb-4">
                 <label class="block text-white">Tipo de Sangre</label>
                 <input type="text" name="TipoSangre" value="{{ old('TipoSangre', $empleado->TipoSangre) }}" class="w-full px-3 py-2 rounded bg-gray-700 text-white" maxlength="5">
             </div>

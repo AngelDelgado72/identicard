@@ -4,13 +4,15 @@
             <h2 class="font-semibold text-xl text-gray-200 leading-tight">
                 Plantillas de Credenciales
             </h2>
-            <a href="{{ route('plantillas.create') }}" 
-               class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
-                Nueva Plantilla
-            </a>
+            @if(auth()->user()->hasPermission('plantillas', 'crear'))
+                <a href="{{ route('plantillas.create') }}" 
+                   class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Nueva Plantilla
+                </a>
+            @endif
         </div>
     </x-slot>
 
@@ -21,6 +23,13 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            @if(!auth()->user()->hasPermission('plantillas', 'ver'))
+                <div class="bg-red-100 dark:bg-red-900 p-6 rounded-lg">
+                    <h3 class="text-red-800 dark:text-red-200 font-semibold mb-2">Acceso Denegado</h3>
+                    <p class="text-red-600 dark:text-red-300">No tienes permisos para ver las plantillas de credenciales.</p>
+                </div>
+            @else
 
             <div class="bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6">
@@ -52,13 +61,16 @@
                                                      class="w-full h-32 object-contain bg-white rounded">
                                             </div>
                                         @endif
-                                        <p class="text-sm text-gray-300">
-                                            📏 {{ $plantilla->ancho_mm }}mm × {{ $plantilla->alto_mm }}mm
+                                        <p class="text-sm text-gray-300 flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                                            </svg>
+                                            {{ $plantilla->ancho_mm }}mm × {{ $plantilla->alto_mm }}mm
                                         </p>
                                     </div>
 
                                     <div class="flex flex-col gap-2">
-                                        @if(!$plantilla->activa)
+                                        @if(!$plantilla->activa && auth()->user()->hasPermission('plantillas', 'activar'))
                                             <form action="{{ route('plantillas.activar', $plantilla) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" 
@@ -67,19 +79,23 @@
                                                 </button>
                                             </form>
                                         @endif
-                                        <a href="{{ route('plantillas.edit', $plantilla) }}" 
-                                           class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-2 rounded text-center text-sm">
-                                            Configurar Campos
-                                        </a>
-                                        <form action="{{ route('plantillas.destroy', $plantilla) }}" 
-                                              method="POST" 
-                                              onsubmit="return confirm('¿Estás seguro de eliminar esta plantilla?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded text-sm">
-                                                Eliminar
-                                            </button>
-                                        </form>
+                                        @if(auth()->user()->hasPermission('plantillas', 'editar'))
+                                            <a href="{{ route('plantillas.edit', $plantilla) }}" 
+                                               class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-2 rounded text-center text-sm">
+                                                Configurar Campos
+                                            </a>
+                                        @endif
+                                        @if(auth()->user()->hasPermission('plantillas', 'eliminar'))
+                                            <form action="{{ route('plantillas.destroy', $plantilla) }}" 
+                                                  method="POST" 
+                                                  onsubmit="return confirm('¿Estás seguro de eliminar esta plantilla?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded text-sm">
+                                                    Eliminar
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
@@ -91,19 +107,22 @@
                             </svg>
                             <h3 class="mt-2 text-sm font-medium text-white">No hay plantillas creadas</h3>
                             <p class="mt-1 text-sm text-gray-400">Comienza creando tu primera plantilla de credencial</p>
-                            <div class="mt-6">
-                                <a href="{{ route('plantillas.create') }}" 
-                                   class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                                    </svg>
-                                    Crear Primera Plantilla
-                                </a>
-                            </div>
+                            @if(auth()->user()->hasPermission('plantillas', 'crear'))
+                                <div class="mt-6">
+                                    <a href="{{ route('plantillas.create') }}" 
+                                       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                        </svg>
+                                        Crear Primera Plantilla
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                     @endif
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </x-app-layout>
