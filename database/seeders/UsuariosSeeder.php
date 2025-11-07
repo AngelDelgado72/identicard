@@ -36,7 +36,7 @@ class UsuariosSeeder extends Seeder
             'idPerfil' => $perfilAdmin->idPerfil
         ]);
 
-        echo "✓ Usuario administrador creado exitosamente:\n";
+        echo "  Usuario administrador creado exitosamente:\n";
         echo "  Email: admin@identicard.com\n";
         echo "  Password: admin123\n";
         echo "  Perfil: Administrador (todos los permisos asignados)\n";
