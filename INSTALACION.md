@@ -142,7 +142,7 @@ identicard/
 
 ---
 
-## 🛠️ Comandos Útiles
+##  Comandos Útiles
 
 ### Limpiar Caché
 ```bash
@@ -169,7 +169,7 @@ php artisan db:seed --class=UsuariosSeeder
 
 ---
 
-## ⚠️ Solución de Problemas Comunes
+##  Solución de Problemas Comunes
 
 ### Error: "No application encryption key has been specified"
 ```bash
@@ -200,7 +200,7 @@ php artisan storage:link
 
 ---
 
-## 🔒 Seguridad
+##  Seguridad
 
 - **NUNCA** subas el archivo `.env` a Git (ya está en `.gitignore`)
 - Cambia la contraseña del administrador después del primer login

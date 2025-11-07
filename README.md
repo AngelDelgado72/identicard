@@ -1,61 +1,233 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+#  Guía de Instalación - Identicard
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Requisitos Previos
+- PHP 8.2 o superior
+- Composer
+- Node.js y npm
+- Servidor web (Apache/Nginx) o usar servidor integrado de PHP
+- Base de datos SQLite (incluida) o MySQL
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##  Pasos para Clonar y Ejecutar en Otra PC
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Clonar el Repositorio
+```bash
+git clone https://github.com/AngelDelgado72/identicard.git
+cd identicard
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. Instalar Dependencias de PHP
+```bash
+composer install
+```
 
-## Learning Laravel
+### 3. Instalar Dependencias de JavaScript
+```bash
+npm install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 4. Configurar el Archivo de Entorno
+```bash
+# En Windows PowerShell:
+Copy-Item .env.example .env
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# En Linux/Mac:
+cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 5. Generar la Clave de Aplicación
+```bash
+php artisan key:generate
+```
 
-## Laravel Sponsors
+### 6. Configurar la Base de Datos
+Edita el archivo `.env` y configura la conexión a la base de datos:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Opción A: SQLite (por defecto)**
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=C:\ruta\completa\al\proyecto\database\database.sqlite
+```
 
-### Premium Partners
+**Opción B: MySQL**
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=identicard
+DB_USERNAME=root
+DB_PASSWORD=tu_password
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 7. Crear el Archivo de Base de Datos (solo si usas SQLite)
+```bash
+# En Windows PowerShell:
+New-Item -ItemType File -Path database\database.sqlite -Force
 
-## Contributing
+# En Linux/Mac:
+touch database/database.sqlite
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 8. Ejecutar las Migraciones y Seeders
+```bash
+php artisan migrate:fresh --seed
+```
 
-## Code of Conduct
+Esto creará:
+- Todas las tablas de la base de datos
+- Todos los permisos del sistema
+- Usuario administrador:
+  - **Email:** admin@identicard.com
+  - **Password:** admin123
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 9. Crear el Enlace Simbólico de Storage
+```bash
+php artisan storage:link
+```
 
-## Security Vulnerabilities
+### 10. Compilar los Assets de Frontend
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Para Desarrollo:**
+```bash
+npm run dev
+```
 
-## License
+**Para Producción:**
+```bash
+npm run build
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 11. Iniciar el Servidor de Desarrollo
+```bash
+php artisan serve
+```
+
+La aplicación estará disponible en: `http://localhost:8000`
+
+---
+
+##  Credenciales de Acceso
+
+### Usuario Administrador
+- **Email:** admin@identicard.com
+- **Password:** admin123
+- **Permisos:** Acceso completo a todas las funcionalidades
+
+---
+
+##  Estructura de Carpetas Importantes
+
+```
+identicard/
+├── app/                    # Código de la aplicación
+├── database/
+│   ├── migrations/         # Migraciones de base de datos
+│   ├── seeders/           # Seeders (datos iniciales)
+│   └── database.sqlite    # Base de datos SQLite (se crea en paso 7)
+├── public/
+│   └── storage/           # Enlace simbólico (se crea en paso 9)
+├── resources/
+│   ├── views/             # Plantillas Blade
+│   ├── css/               # Estilos CSS
+│   └── js/                # JavaScript
+├── routes/                # Rutas de la aplicación
+├── storage/
+│   └── app/
+│       └── public/        # Archivos públicos (fotos, firmas, plantillas)
+├── .env                   # Configuración (NO se sube a Git)
+├── .env.example           # Plantilla de configuración
+└── composer.json          # Dependencias PHP
+```
+
+---
+
+##  Comandos Útiles
+
+### Limpiar Caché
+```bash
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
+php artisan route:clear
+```
+
+### Refrescar Base de Datos
+```bash
+php artisan migrate:fresh --seed
+```
+
+### Ver Rutas Disponibles
+```bash
+php artisan route:list
+```
+
+### Ejecutar Solo el Seeder de Usuarios
+```bash
+php artisan db:seed --class=UsuariosSeeder
+```
+
+---
+
+##  Solución de Problemas Comunes
+
+### Error: "No application encryption key has been specified"
+```bash
+php artisan key:generate
+```
+
+### Error: "The stream or file could not be opened"
+```bash
+# Windows
+icacls storage /grant Everyone:F /T
+icacls bootstrap/cache /grant Everyone:F /T
+
+# Linux/Mac
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+```
+
+### Error: "Class not found"
+```bash
+composer dump-autoload
+```
+
+### Error al crear enlace simbólico en Windows
+Ejecuta PowerShell como Administrador y luego:
+```bash
+php artisan storage:link
+```
+
+---
+
+##  Seguridad
+
+- **NUNCA** subas el archivo `.env` a Git (ya está en `.gitignore`)
+- Cambia la contraseña del administrador después del primer login
+- Configura APP_DEBUG=false en producción
+- Usa HTTPS en producción
+
+---
+
+##  Soporte
+
+Si encuentras algún problema durante la instalación, verifica:
+1. Versión de PHP: `php -v` (debe ser >= 8.2)
+2. Versión de Composer: `composer --version`
+3. Versión de Node: `node -v`
+4. Extensiones de PHP requeridas:
+   - PDO
+   - SQLite o MySQL
+   - OpenSSL
+   - Mbstring
+   - Tokenizer
+   - XML
+   - Ctype
+   - JSON
+   - BCMath
+   - Fileinfo
+   - GD (para procesamiento de imágenes)
+
+---
+
+**¡Listo para usar! **
