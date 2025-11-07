@@ -27,7 +27,7 @@ brew install php@8.2
 - **Linux/macOS:** Sigue las instrucciones en la página oficial
 
 ### 3. Node.js y npm (Gestor de Paquetes JavaScript)
-- Descarga desde: [https://nodejs.org/](https://nodejs.org/)
+- Descarga desde: [(https://nodejs.org/es/download)](https://nodejs.org/es/download)
 - Recomendado: **LTS (Long Term Support)** - versión estable
 - **Windows/macOS:** Descarga el instalador y ejecútalo
 - **Linux:** Usa el gestor de paquetes de tu distribución
