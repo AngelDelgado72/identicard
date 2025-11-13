@@ -28,7 +28,7 @@
                     <x-input-error :messages="$errors->get('password')" class="mt-1" />
                 </div>
 
-                <!-- Recuérdame -->
+                <!-- Recuérdame 
                 <div class="flex items-center justify-between mb-4">
                     <label for="remember_me" class="flex items-center text-sm text-gray-600 dark:text-gray-400">
                         <input id="remember_me" type="checkbox" class="mr-2 rounded border-gray-300 text-blue-600 focus:ring-blue-500" name="remember">
@@ -41,6 +41,7 @@
                         </a>
                     @endif
                 </div>
+                -->
 
                 <!-- Botón -->
                 <button type="submit" 

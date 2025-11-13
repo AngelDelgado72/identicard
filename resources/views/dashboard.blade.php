@@ -25,37 +25,57 @@
             margin: 0;
         }
 
-        .sidebar-menu > ul > li > a {
-            display: block;
+        .sidebar-menu > ul > li > div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 12px 20px;
             color: #d1d5db;
-            text-decoration: none;
             border-bottom: 1px solid #4b5563;
             transition: all 0.3s ease;
             position: relative;
         }
 
-        .sidebar-menu > ul > li > a:hover {
+        .sidebar-menu > ul > li > div:hover {
             background: #4b5563;
+        }
+
+        .sidebar-menu > ul > li > div a {
+            color: #d1d5db;
+            text-decoration: none;
+            flex: 1;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-menu > ul > li > div:hover a {
             color: #ffffff;
+        }
+
+        .toggle-arrow-btn:hover {
+            opacity: 0.8;
         }
 
         .sidebar-menu .submenu {
             background: #4b5563;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s ease;
         }
 
-        .sidebar-menu li:hover .submenu {
-            max-height: 500px;
+        /* Clase activa para menús expandidos */
+        .sidebar-menu .submenu.active {
+            max-height: 1000px;
         }
 
         .sidebar-menu .submenu li a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 10px 40px;
             color: #9ca3af;
             border-bottom: 1px solid #6b7280;
             font-size: 14px;
+            cursor: pointer;
         }
 
         .sidebar-menu .submenu li a:hover {
@@ -76,6 +96,18 @@
         .sidebar-menu .submenu .submenu li a:hover {
             background: #9ca3af;
             color: #ffffff;
+        }
+
+        /* Icono de flecha para indicar si está expandido o colapsado */
+        .menu-arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            width: 20px;
+            height: 20px;
+        }
+
+        .menu-arrow.rotated {
+            transform: rotate(180deg);
         }
 
         .main-content {
@@ -128,13 +160,16 @@
                         </div>
                         <ul>
                             <li>
-                                <a href="#" onclick="showDashboard()">
-                                    <span class="menu-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline-block">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                                        </svg>
-                                    </span> Inicio
-                                </a>
+                                <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; color: #d1d5db; border-bottom: 1px solid #4b5563;">
+                                    <a href="#" onclick="showDashboard()" style="flex: 1; display: flex; align-items: center; text-decoration: none; color: inherit;">
+                                        <span class="menu-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline-block">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                            </svg>
+                                        </span>
+                                        <span style="margin-left: 8px;">Inicio</span>
+                                    </a>
+                                </div>
                             </li>
 
 
@@ -170,157 +205,16 @@
                 <!-- Columna principal (derecha) -->
                 <div class="main-column">
                     <div id="content-area">
-                    <h3 class="text-lg font-semibold mb-4">¡Bienvenido al sistema!</h3>
-                    
-                    @auth
-                        <!-- Estadísticas principales -->
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            <div class="bg-blue-100 dark:bg-blue-900 p-6 rounded-lg text-center">
-                                <div class="text-3xl font-bold text-blue-800 dark:text-blue-200">{{ $empresas->count() }}</div>
-                                <div class="text-blue-600 dark:text-blue-300">Empresas</div>
-                            </div>
-                            <div class="bg-green-100 dark:bg-green-900 p-6 rounded-lg text-center">
-                                <div class="text-3xl font-bold text-green-800 dark:text-green-200">
-                                    {{ $empresas->sum(function($empresa) { return $empresa->sucursales->count(); }) }}
-                                </div>
-                                <div class="text-green-600 dark:text-green-300">Sucursales</div>
-                            </div>
-                            <div class="bg-purple-100 dark:bg-purple-900 p-6 rounded-lg text-center">
-                                <div class="text-3xl font-bold text-purple-800 dark:text-purple-200">
-                                    {{ $empresas->sum(function($empresa) { return $empresa->sucursales->sum(function($sucursal) { return $sucursal->empleados->count(); }); }) }}
-                                </div>
-                                <div class="text-purple-600 dark:text-purple-300">Empleados</div>
+                        <!-- Mensaje inicial vacío - Se llenará cuando el usuario seleccione una empresa o sucursal -->
+                        <div class="flex items-center justify-center h-full min-h-[400px]">
+                            <div class="text-center text-gray-400 dark:text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-24 h-24 mx-auto mb-4 opacity-50">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                                </svg>
+                                <p class="text-lg font-medium mb-2">Selecciona una empresa o sucursal</p>
+                                <p class="text-sm">Usa el menú lateral para navegar por la estructura organizacional</p>
                             </div>
                         </div>
-
-                        <!-- Tarjetas de acceso rápido 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            @if(auth()->user()->hasPermission('empresas', 'ver'))
-                                <div class="bg-blue-100 dark:bg-blue-900 p-6 rounded-lg hover:shadow-lg transition-shadow">
-                                    <h4 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2 flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
-                                        </svg>
-                                        Empresas
-                                    </h4>
-                                    <p class="text-blue-600 dark:text-blue-300 mb-4">Gestiona las empresas del sistema</p>
-                                    <a href="{{ route('empresas.crud') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-                                        Ver empresas
-                                    </a>
-                                </div>
-                            @endif
-
-                            @if(auth()->user()->hasPermission('sucursales', 'ver'))
-                                <div class="bg-green-100 dark:bg-green-900 p-6 rounded-lg hover:shadow-lg transition-shadow">
-                                    <h4 class="text-lg font-semibold text-green-800 dark:text-green-200 mb-2">🏪 Sucursales</h4>
-                                    <p class="text-green-600 dark:text-green-300 mb-4">Administra las sucursales</p>
-                                    <a href="{{ route('sucursales.crud') }}" class="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
-                                        Ver sucursales
-                                    </a>
-                                </div>
-                            @endif
-
-                            @if(auth()->user()->hasPermission('empleados', 'ver'))
-                                <div class="bg-purple-100 dark:bg-purple-900 p-6 rounded-lg hover:shadow-lg transition-shadow">
-                                    <h4 class="text-lg font-semibold text-purple-800 dark:text-purple-200 mb-2 flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                        </svg>
-                                        Empleados
-                                    </h4>
-                                    <p class="text-purple-600 dark:text-purple-300 mb-4">Gestiona los empleados</p>
-                                    <a href="{{ route('empleados.crud') }}" class="inline-block px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
-                                        Ver empleados
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
-                        -->
-
-                        <!-- Administración del Sistema 
-                        @if(auth()->user()->hasPermission('usuarios', 'ver') || auth()->user()->hasPermission('perfiles', 'ver'))
-                            <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
-                                <h4 class="text-lg font-semibold mb-4">⚙️ Administración del Sistema</h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    @if(auth()->user()->hasPermission('perfiles', 'ver'))
-                                        <div class="bg-yellow-100 dark:bg-yellow-900 p-6 rounded-lg hover:shadow-lg transition-shadow">
-                                            <h5 class="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">🛡️ Perfiles</h5>
-                                            <p class="text-yellow-600 dark:text-yellow-300 mb-4">Administra perfiles y permisos</p>
-                                            <a href="{{ route('admin.perfiles.index') }}" class="inline-block px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors">
-                                                Gestionar perfiles
-                                            </a>
-                                        </div>
-                                    @endif
-
-                                    @if(auth()->user()->hasPermission('usuarios', 'ver'))
-                                        <div class="bg-red-100 dark:bg-red-900 p-6 rounded-lg hover:shadow-lg transition-shadow">
-                                            <h5 class="font-semibold text-red-800 dark:text-red-200 mb-2">👥 Usuarios</h5>
-                                            <p class="text-red-600 dark:text-red-300 mb-4">Administra usuarios del sistema</p>
-                                            <a href="{{ route('admin.usuarios.index') }}" class="inline-block px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
-                                                Gestionar usuarios
-                                            </a>
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                        -->
-
-                        <!-- Información del usuario -->
-                        <div class="mt-8 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <p class="text-sm text-gray-600 dark:text-gray-300 flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                        </svg>
-                                        <strong>Perfil:</strong> {{ auth()->user()->perfil->nombre ?? 'Sin perfil asignado' }}
-                                    </p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1 flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                                        </svg>
-                                        <strong>Permisos:</strong> 
-                                        {{ auth()->user()->perfil ? auth()->user()->perfil->permisos->count() : 0 }} permisos asignados
-                                    </p>
-                                </div>
-                                <div>
-                                    @if(auth()->user()->sucursales->count() > 0)
-                                        <p class="text-sm text-gray-600 dark:text-gray-300 flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
-                                            </svg>
-                                            <strong>Sucursales asignadas:</strong> {{ auth()->user()->sucursales->count() }}
-                                        </p>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                            Solo verás las empresas/sucursales que tienes asignadas en el menú lateral
-                                        </p>
-                                    @else
-                                        <p class="text-sm text-gray-600 dark:text-gray-300 flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
-                                            </svg>
-                                            <strong>Acceso:</strong> Todas las sucursales
-                                        </p>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                            Tienes acceso completo a toda la estructura organizacional
-                                        </p>
-                                    @endif
-                                </div>
-                            </div>
-                            
-                            <!-- Consejos de navegación -->
-                            <div class="mt-4 p-3 bg-blue-50 dark:bg-blue-900 rounded border-l-4 border-blue-400">
-                                <p class="text-sm text-blue-800 dark:text-blue-200 flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
-                                    </svg>
-                                    <strong>Navegación:</strong> Usa el menú lateral para explorar la estructura organizacional. 
-                                    Pasa el cursor sobre las empresas para ver sus sucursales y empleados.
-                                </p>
-                            </div>
-                        </div>
-                    @endauth
                     </div>
                 </div>
             </div>
@@ -342,91 +236,73 @@
             empleados: {{ auth()->user()->hasPermission('empleados', 'ver') ? 'true' : 'false' }}
         };
 
+        // Función para toggle de submenús (expandir/colapsar) - solo para el botón de flecha
+        function toggleSubmenuOnly(event, button) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Encontrar el elemento padre li
+            const li = button.closest('li');
+            const submenu = li.querySelector('.submenu');
+            const arrow = button.querySelector('.menu-arrow');
+            
+            if (submenu) {
+                // Toggle la clase active
+                submenu.classList.toggle('active');
+                
+                // Rotar la flecha
+                if (arrow) {
+                    arrow.classList.toggle('rotated');
+                }
+            }
+        }
+
+        // Inicializar event listeners cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard cargado');
+            
+            // Verificar si el usuario tiene solo 1 sucursal asignada y redirigir automáticamente
+            checkAutoRedirect();
+        });
+
+        // Función para verificar y auto-redirigir si solo hay 1 sucursal
+        function checkAutoRedirect() {
+            // Contar cuántas sucursales tiene el usuario en el menú
+            const sucursalLinks = document.querySelectorAll('a[onclick*="sucursal-"]');
+            
+            if (sucursalLinks.length === 1) {
+                // Solo hay 1 sucursal, obtener sus datos y cargar automáticamente
+                const link = sucursalLinks[0];
+                const onclickAttr = link.getAttribute('onclick');
+                
+                // Extraer los parámetros de loadContent
+                const match = onclickAttr.match(/loadContent\('([^']+)',\s*'([^']+)',\s*'([^']+)'\)/);
+                
+                if (match) {
+                    const type = match[1];
+                    const slug = match[2];
+                    const name = match[3];
+                    
+                    console.log('Auto-cargando única sucursal:', name);
+                    loadContent(type, slug, name);
+                }
+            }
+        }
+
         function showDashboard() {
             const contentArea = document.getElementById('content-area');
             
-            let accessCards = '';
-            
-            if (userPermissions.empresas) {
-                accessCards += `
-                    <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                        <div class="text-center">
-                            <div class="mb-3 flex justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-blue-600">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
-                                </svg>
-                            </div>
-                            <h4 class="text-lg font-semibold mb-2">Gestión de Empresas</h4>
-                            <p class="text-gray-600 dark:text-gray-300 mb-4">Administra todas las empresas del sistema</p>
-                            <a href="/empresas/crud" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-                                Gestionar Empresas
-                            </a>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            if (userPermissions.sucursales) {
-                accessCards += `
-                    <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                        <div class="text-center">
-                            <div class="mb-3 flex justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-green-600">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
-                                </svg>
-                            </div>
-                            <h4 class="text-lg font-semibold mb-2">Gestión de Sucursales</h4>
-                            <p class="text-gray-600 dark:text-gray-300 mb-4">Administra sucursales por empresa</p>
-                            <a href="/sucursales/crud" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
-                                Gestionar Sucursales
-                            </a>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            if (userPermissions.empleados) {
-                accessCards += `
-                    <div class="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                        <div class="text-center">
-                            <div class="mb-3 flex justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-purple-600">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                                </svg>
-                            </div>
-                            <h4 class="text-lg font-semibold mb-2">Gestión de Empleados</h4>
-                            <p class="text-gray-600 dark:text-gray-300 mb-4">Administra empleados y validaciones</p>
-                            <a href="/empleados/crud" class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
-                                Gestionar Empleados
-                            </a>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Restaurar el dashboard original ocupando todo el ancho
+            // Mostrar el mensaje vacío inicial
             contentArea.innerHTML = `
-                <h3 class="text-lg font-semibold mb-4">¡Bienvenido al sistema!</h3>
-                
-                <!-- Estadísticas principales -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-blue-100 dark:bg-blue-900 p-6 rounded-lg text-center">
-                        <div class="text-3xl font-bold text-blue-800 dark:text-blue-200">${dashboardStats.empresas}</div>
-                        <div class="text-blue-600 dark:text-blue-300">Empresas</div>
+                <!-- Mensaje inicial vacío - Se llenará cuando el usuario seleccione una empresa o sucursal -->
+                <div class="flex items-center justify-center h-full min-h-[400px]">
+                    <div class="text-center text-gray-400 dark:text-gray-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-24 h-24 mx-auto mb-4 opacity-50">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                        </svg>
+                        <p class="text-lg font-medium mb-2">Selecciona una empresa o sucursal</p>
+                        <p class="text-sm">Usa el menú lateral para navegar por la estructura organizacional</p>
                     </div>
-                    <div class="bg-green-100 dark:bg-green-900 p-6 rounded-lg text-center">
-                        <div class="text-3xl font-bold text-green-800 dark:text-green-200">${dashboardStats.sucursales}</div>
-                        <div class="text-green-600 dark:text-green-300">Sucursales</div>
-                    </div>
-                    <div class="bg-purple-100 dark:bg-purple-900 p-6 rounded-lg text-center">
-                        <div class="text-3xl font-bold text-purple-800 dark:text-purple-200">${dashboardStats.empleados}</div>
-                        <div class="text-purple-600 dark:text-purple-300">Empleados</div>
-                    </div>
-                </div>
-
-                <!-- Accesos rápidos principales -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    ${accessCards}
                 </div>
             `;
         }
