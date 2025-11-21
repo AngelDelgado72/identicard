@@ -9,7 +9,11 @@
         <h1 class="text-3xl font-bold text-gray-900">Paquetes de Impresión</h1>
         @if(auth()->user()->hasPermission('paquetes', 'crear'))
             <a href="{{ route('paquetes.create') }}" 
-               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+               class="inline-flex items-center px-4 py-2 rounded font-semibold text-white hover:opacity-80 transition"
+               style="background-color: #919090;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
                 Crear Nuevo Paquete
             </a>
         @endif
@@ -64,7 +68,8 @@
                 
                 <div class="lg:col-span-2 flex gap-2">
                     <button type="submit" 
-                            class="flex-1 px-3 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm whitespace-nowrap">
+                            class="flex-1 px-3 py-2 text-white rounded-md hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm whitespace-nowrap transition"
+                            style="background-color: #919090;">
                         Buscar
                     </button>
                     <a href="{{ route('paquetes.index') }}" 
@@ -77,7 +82,8 @@
                     <button type="button"
                             onclick="toggleOrdenEstatus()" 
                             id="btn-ordenar-estatus"
-                            class="flex-1 px-2 py-2 text-xs bg-blue-700 text-white rounded-md hover:bg-blue-600 transition-colors border border-blue-500 whitespace-nowrap">
+                            class="flex-1 px-2 py-2 text-xs text-white rounded-md transition-colors border whitespace-nowrap"
+                            style="background-color: #919090; border-color: #6b6a6a;">
                         <svg class="w-3 h-3 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
                         </svg>
@@ -217,7 +223,8 @@
                                     <!-- Botón Ver -->
                                     @if(auth()->user()->hasPermission('paquetes', 'ver'))
                                         <a href="{{ route('paquetes.show', $paquete->idPaquete) }}" 
-                                           class="inline-flex items-center px-2 py-1 border border-blue-400 text-xs font-medium rounded text-blue-300 bg-blue-900 hover:bg-blue-800 transition-colors"
+                                           class="inline-flex items-center p-2 text-xs font-medium rounded text-white transition hover:opacity-80"
+                                           style="background-color: #919090;"
                                            title="Ver detalles">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -229,7 +236,8 @@
                                     @if($paquete->puedeSerEditado() && auth()->user()->hasPermission('paquetes', 'editar'))
                                         <!-- Botón Editar -->
                                         <a href="{{ route('paquetes.edit', $paquete->idPaquete) }}" 
-                                           class="inline-flex items-center px-2 py-1 border border-yellow-400 text-xs font-medium rounded text-yellow-300 bg-yellow-900 hover:bg-yellow-800 transition-colors"
+                                           class="inline-flex items-center p-2 text-xs font-medium rounded text-white transition hover:opacity-80"
+                                           style="background-color: #919090;"
                                            title="Editar">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -244,7 +252,8 @@
                                             @method('PATCH')
                                             <button type="submit" 
                                                     onclick="return confirm('¿Confirmar este paquete? No podrá ser modificado después.')"
-                                                    class="inline-flex items-center px-2 py-1 border border-green-400 text-xs font-medium rounded text-green-300 bg-green-900 hover:bg-green-800 transition-colors"
+                                                    class="inline-flex items-center p-2 text-xs font-medium rounded text-white transition hover:opacity-80"
+                                                    style="background-color: #919090;"
                                                     title="Confirmar">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -261,7 +270,8 @@
                                                 @method('PATCH')
                                                 <button type="submit" 
                                                         onclick="return confirm('¿Autorizar este paquete? Todos los empleados están validados.')"
-                                                        class="inline-flex items-center px-2 py-1 border border-purple-400 text-xs font-medium rounded text-purple-300 bg-purple-900 hover:bg-purple-800 transition-colors"
+                                                        class="inline-flex items-center p-2 text-xs font-medium rounded text-white transition hover:opacity-80"
+                                                        style="background-color: #919090;"
                                                         title="Autorizar">
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -270,7 +280,8 @@
                                             </form>
                                         @elseif(!$paquete->todosEmpleadosValidados())
                                             <!-- Indicador de empleados pendientes de validación -->
-                                            <span class="inline-flex items-center px-2 py-1 border border-yellow-400 text-xs font-medium rounded text-yellow-300 bg-yellow-900"
+                                            <span class="inline-flex items-center p-2 text-xs font-medium rounded text-white"
+                                                  style="background-color: #919090; opacity: 0.6;"
                                                   title="Hay empleados pendientes de validación">
                                                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
@@ -283,7 +294,8 @@
                                         <!-- Botón Imprimir Credenciales -->
                                         <a href="{{ route('paquetes.credenciales', $paquete->idPaquete) }}" 
                                            target="_blank"
-                                           class="inline-flex items-center px-2 py-1 border border-indigo-400 text-xs font-medium rounded text-indigo-300 bg-indigo-900 hover:bg-indigo-800 transition-colors"
+                                           class="inline-flex items-center p-2 text-xs font-medium rounded text-white transition hover:opacity-80"
+                                           style="background-color: #919090;"
                                            title="Imprimir Credenciales">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -298,7 +310,8 @@
                                             @method('DELETE')
                                             <button type="submit" 
                                                     onclick="return confirm('¿Eliminar este paquete?')"
-                                                    class="inline-flex items-center px-2 py-1 border border-red-400 text-xs font-medium rounded text-red-300 bg-red-900 hover:bg-red-800 transition-colors"
+                                                    class="inline-flex items-center p-2 text-xs font-medium rounded text-white transition hover:opacity-80"
+                                                    style="background-color: #919090;"
                                                     title="Eliminar">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -320,7 +333,8 @@
                                 @if(auth()->user()->hasPermission('paquetes', 'crear'))
                                     <div class="mt-6">
                                         <a href="{{ route('paquetes.create') }}" 
-                                           class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                           class="inline-flex items-center px-4 py-2 border-transparent shadow-sm text-sm font-medium rounded-md text-white hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 transition"
+                                           style="background-color: #919090;">
                                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                             </svg>
@@ -437,13 +451,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function actualizarEstilosBotones() {
         if (ordenActual === 'estatus') {
             btnOrdenarEstatus.classList.remove('bg-gray-700', 'border-gray-500');
-            btnOrdenarEstatus.classList.add('bg-blue-700', 'border-blue-500');
-            btnOrdenarFecha.classList.remove('bg-blue-700', 'border-blue-500');
+            btnOrdenarEstatus.style.backgroundColor = '#919090';
+            btnOrdenarEstatus.style.borderColor = '#6b6a6a';
+            btnOrdenarFecha.style.backgroundColor = '';
+            btnOrdenarFecha.style.borderColor = '';
             btnOrdenarFecha.classList.add('bg-gray-700', 'border-gray-500');
         } else {
             btnOrdenarFecha.classList.remove('bg-gray-700', 'border-gray-500');
-            btnOrdenarFecha.classList.add('bg-blue-700', 'border-blue-500');
-            btnOrdenarEstatus.classList.remove('bg-blue-700', 'border-blue-500');
+            btnOrdenarFecha.style.backgroundColor = '#919090';
+            btnOrdenarFecha.style.borderColor = '#6b6a6a';
+            btnOrdenarEstatus.style.backgroundColor = '';
+            btnOrdenarEstatus.style.borderColor = '';
             btnOrdenarEstatus.classList.add('bg-gray-700', 'border-gray-500');
         }
     }

@@ -6,7 +6,8 @@
             </h2>
             @if(auth()->user()->hasPermission('plantillas', 'crear'))
                 <a href="{{ route('plantillas.create') }}" 
-                   class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center">
+                   class="text-white px-4 py-2 rounded-lg inline-flex items-center hover:opacity-80 transition"
+                   style="background-color: #919090;">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -74,14 +75,16 @@
                                             <form action="{{ route('plantillas.activar', $plantilla) }}" method="POST">
                                                 @csrf
                                                 <button type="submit" 
-                                                        class="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded text-sm">
+                                                        class="w-full text-white px-3 py-2 rounded text-sm hover:opacity-80 transition"
+                                                        style="background-color: #919090;">
                                                     Activar Plantilla
                                                 </button>
                                             </form>
                                         @endif
                                         @if(auth()->user()->hasPermission('plantillas', 'editar'))
                                             <a href="{{ route('plantillas.edit', $plantilla) }}" 
-                                               class="w-full bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-2 rounded text-center text-sm">
+                                               class="w-full text-white px-3 py-2 rounded text-center text-sm hover:opacity-80 transition"
+                                               style="background-color: #919090;">
                                                 Configurar Campos
                                             </a>
                                         @endif
@@ -91,7 +94,9 @@
                                                   onsubmit="return confirm('¿Estás seguro de eliminar esta plantilla?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded text-sm">
+                                                <button type="submit" 
+                                                        class="w-full text-white px-3 py-2 rounded text-sm hover:opacity-80 transition"
+                                                        style="background-color: #919090;">
                                                     Eliminar
                                                 </button>
                                             </form>
@@ -110,7 +115,8 @@
                             @if(auth()->user()->hasPermission('plantillas', 'crear'))
                                 <div class="mt-6">
                                     <a href="{{ route('plantillas.create') }}" 
-                                       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center">
+                                       class="text-white px-4 py-2 rounded-lg inline-flex items-center hover:opacity-80 transition"
+                                       style="background-color: #919090;">
                                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                                         </svg>
