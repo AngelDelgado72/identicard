@@ -395,7 +395,7 @@
             if (empresa.sucursales && empresa.sucursales.length > 0) {
                 sucursalesHtml = `
                     <div class="mt-6">
-                        <h4 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-3 flex items-center">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center" style="color: #919090;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
                             </svg>
@@ -403,23 +403,23 @@
                         </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             ${empresa.sucursales.map(sucursal => `
-                                <div class="bg-white dark:bg-gray-700 p-3 rounded border-l-4 border-green-500">
-                                    <h5 class="font-semibold text-green-800 dark:text-green-200">${sucursal.nombre}</h5>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">ID: ${sucursal.id}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                                <div class="p-3 rounded border-l-4" style="background-color: #6c329c; border-color: #919090;">
+                                    <h5 class="font-semibold text-white">${sucursal.nombre}</h5>
+                                    <p class="text-sm text-white text-opacity-90">ID: ${sucursal.id}</p>
+                                    <p class="text-sm text-white text-opacity-90 flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                                         </svg>
                                         ${sucursal.direccion}
                                     </p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+                                    <p class="text-sm text-white text-opacity-90 flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                                         </svg>
                                         ${sucursal.telefono}
                                     </p>
-                                    <p class="text-sm text-green-600 dark:text-green-400 font-medium flex items-center">
+                                    <p class="text-sm text-white font-medium flex items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                                         </svg>
@@ -455,8 +455,8 @@
                     </svg>
                     ${empresa.nombre}
                 </h1>
-                <div class="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg">
-                    <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-4">Información de la Empresa</h3>
+                <div class="p-6 rounded-lg" style="background-color: rgba(145, 144, 144, 0.1);">
+                    <h3 class="text-lg font-semibold mb-4" style="color: #919090;">Información de la Empresa</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <p><strong>ID:</strong> ${empresa.id}</p>
@@ -471,13 +471,13 @@
                     </div>
                     ${sucursalesHtml}
                     <div class="mt-6 text-center space-x-4">
-                        <a href="/sucursales/create?empresa=${empresa.id}" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors inline-flex items-center">
+                        <a href="/sucursales/create?empresa=${empresa.id}" class="px-6 py-2 text-white rounded transition-colors inline-flex items-center hover:opacity-80" style="background-color: #919090;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                             Agregar Sucursal
                         </a>
-                        <a href="/empresas/${empresa.id}/edit" class="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors inline-flex items-center">
+                        <a href="/empresas/${empresa.id}/edit" class="px-6 py-2 text-white rounded transition-colors inline-flex items-center hover:opacity-80" style="background-color: #919090;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
@@ -493,7 +493,7 @@
             if (sucursal.empleados && sucursal.empleados.length > 0) {
                 empleadosHtml = `
                     <div class="mt-6">
-                        <h4 class="text-lg font-semibold text-green-800 dark:text-green-200 mb-3 flex items-center">
+                        <h4 class="text-lg font-semibold mb-3 flex items-center" style="color: #919090;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
                             </svg>
@@ -501,17 +501,17 @@
                         </h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                             ${sucursal.empleados.map(empleado => `
-                                <div class="bg-white dark:bg-gray-700 p-3 rounded border-l-4 border-purple-500">
-                                    <h5 class="font-semibold text-purple-800 dark:text-purple-200">${empleado.nombre}</h5>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">ID: ${empleado.id}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Puesto: ${empleado.puesto || 'No definido'}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Correo: ${empleado.correo || 'No definido'}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Departamento: ${empleado.departamento || 'No definido'}</p>
-                                    <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">RFC: ${empleado.rfc || 'No definido'}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Tipo de sange: ${empleado.tipo_sangre || 'No definido'}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">Validado: ${empleado.validado}</p>
-                                    <div class="mt-2 pt-2 border-t border-gray-200 dark:border-gray-600">
-                                        <a href="/empleados/${empleado.id}" class="text-xs px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors inline-flex items-center">
+                                <div class="p-3 rounded border-l-4" style="background-color: #6c329c; border-color: #919090;">
+                                    <h5 class="font-semibold text-white">${empleado.nombre}</h5>
+                                    <p class="text-sm text-white text-opacity-90">ID: ${empleado.id}</p>
+                                    <p class="text-sm text-white text-opacity-90">Puesto: ${empleado.puesto || 'No definido'}</p>
+                                    <p class="text-sm text-white text-opacity-90">Correo: ${empleado.correo || 'No definido'}</p>
+                                    <p class="text-sm text-white text-opacity-90">Departamento: ${empleado.departamento || 'No definido'}</p>
+                                    <p class="text-sm text-white font-medium">RFC: ${empleado.rfc || 'No definido'}</p>
+                                    <p class="text-sm text-white text-opacity-90">Tipo de sange: ${empleado.tipo_sangre || 'No definido'}</p>
+                                    <p class="text-sm text-white text-opacity-90">Validado: ${empleado.validado}</p>
+                                    <div class="mt-2 pt-2 border-t border-white border-opacity-30">
+                                        <a href="/empleados/${empleado.id}" class="text-xs px-3 py-1 text-white rounded transition-colors inline-flex items-center hover:opacity-80" style="background-color: #919090;">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -549,13 +549,13 @@
                     </svg>
                     ${sucursal.nombre}
                 </h1>
-                <div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg">
-                    <h3 class="text-lg font-semibold text-green-800 dark:text-green-200 mb-4">Información de la Sucursal</h3>
+                <div class="p-6 rounded-lg" style="background-color: rgba(145, 144, 144, 0.1);">
+                    <h3 class="text-lg font-semibold mb-4" style="color: #919090;">Información de la Sucursal</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <p><strong>ID:</strong> ${sucursal.id}</p>
                             <p><strong>Nombre:</strong> ${sucursal.nombre}</p>
-                            <p><strong>Empresa:</strong> <span class="text-blue-600 font-medium">${sucursal.empresa.nombre}</span></p>
+                            <p><strong>Empresa:</strong> <span class="font-medium" style="color: #919090;">${sucursal.empresa.nombre}</span></p>
                         </div>
                         <div>
                             <p><strong>Dirección:</strong> ${sucursal.direccion}</p>
@@ -565,13 +565,13 @@
                     </div>
                     ${empleadosHtml}
                     <div class="mt-6 text-center space-x-4">
-                        <a href="/empleados/create?sucursal=${sucursal.id}" class="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors inline-flex items-center">
+                        <a href="/empleados/create?sucursal=${sucursal.id}" class="px-6 py-2 text-white rounded transition-colors inline-flex items-center hover:opacity-80" style="background-color: #919090;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             </svg>
                             Agregar Empleado
                         </a>
-                        <a href="/sucursales/${sucursal.id}/edit" class="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors inline-flex items-center">
+                        <a href="/sucursales/${sucursal.id}/edit" class="px-6 py-2 text-white rounded transition-colors inline-flex items-center hover:opacity-80" style="background-color: #919090;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
